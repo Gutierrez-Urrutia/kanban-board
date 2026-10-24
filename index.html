@@ -321,6 +321,9 @@
   }
   .dd-item:hover { background: var(--dd-hover); }
   .dd-item svg   { flex-shrink: 0; opacity: .75; width: 16px; height: 16px; }
+  .dd-item.danger { color: #AC3900; }
+  .dd-item.danger svg { opacity: .9; }
+  .dd-item.danger:hover { background: rgba(172,57,0,.1); }
   .dd-item .dd-badge {
     margin-left: auto;
     font-size: 10px;
@@ -891,10 +894,14 @@
         </div>
 
         <div class="dd-sep"></div>
-        <div class="dd-section-label">Importar</div>
+        <div class="dd-section-label">Excel</div>
         <button class="dd-item" onclick="openImportModal();closeMenu()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           Importar desde Excel
+        </button>
+        <button class="dd-item" onclick="exportTickets();closeMenu()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          Exportar a Excel
         </button>
 
         <div class="dd-sep"></div>
@@ -902,6 +909,13 @@
         <button class="dd-item" onclick="saveToFile();closeMenu()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
           Guardar en archivo
+        </button>
+
+        <div class="dd-sep"></div>
+        <div class="dd-section-label">Zona de peligro</div>
+        <button class="dd-item danger" onclick="clearBoard();closeMenu()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+          Limpiar tablero
         </button>
 
       </div>
@@ -2012,6 +2026,10 @@
 <!-- SheetJS (CDN para parseo de Excel/CSV) -->
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
+<!-- Firebase (CDN, SDK "compat" para no requerir build/módulos) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
 <!-- Datos embebidos: saveToFile() actualiza este bloque al guardar en disco -->
 <script id="initial-data" type="application/json">
 {
@@ -2744,6 +2762,69 @@
 // ── State ────────────────────────────────────────────────
 const STORAGE_KEY = 'kanban_nd_sales_v2';
 
+// ── Sincronización en la nube (Firebase Firestore) ────────
+// 1. Crea un proyecto gratis en https://console.firebase.google.com
+// 2. Agrega una "app web" (ícono </>) y copia aquí el objeto de configuración.
+// 3. Habilita Firestore Database (Firebase Console → Build → Firestore Database).
+// Si dejas los valores de ejemplo, la app sigue funcionando solo con localStorage
+// (persistencia local, como antes), sin sincronizar entre equipos.
+const firebaseConfig = {
+  apiKey:            "AIzaSyDbLxrZ2Td7Fy6lhlcnUB2GyE5xz_tVIq8",
+  authDomain:        "kanban-nd.firebaseapp.com",
+  projectId:         "kanban-nd",
+  storageBucket:      "kanban-nd.firebasestorage.app",
+  messagingSenderId: "535541541485",
+  appId:             "1:535541541485:web:0e3c9d571363fc8158ad64",
+};
+
+let boardRef      = null; // referencia al documento de Firestore con el tablero
+let applyingRemote = false; // evita reenviar a la nube un cambio que acaba de llegar de ella
+
+function startCloudSync() {
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'TU_API_KEY') {
+    console.info('Firebase no configurado: el tablero solo se guarda en este navegador.');
+    return;
+  }
+  try {
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    boardRef = db.collection('kanban-board').doc('main');
+
+    boardRef.onSnapshot(snap => {
+      // Ignorar el "eco" local inmediato de nuestra propia escritura
+      // (ya tenemos ese estado aplicado); solo reaccionar a datos confirmados.
+      if (snap.metadata.hasPendingWrites) return;
+
+      const data = snap.data();
+      if (!data) {
+        // Documento aún no existe en la nube: lo creamos con el estado actual.
+        pushBoardToCloud();
+        return;
+      }
+
+      applyingRemote = true;
+      columns      = data.columns || columns;
+      cards        = data.cards || cards;
+      globalPerRow = data.globalPerRow || globalPerRow;
+      render();
+      applyingRemote = false;
+    }, err => {
+      console.error('Error de sincronización con Firestore:', err);
+      showToast('Sin conexión con la nube: los cambios se guardan solo en este equipo.', 'warning');
+    });
+  } catch (e) {
+    console.error('No se pudo iniciar Firebase:', e);
+  }
+}
+
+function pushBoardToCloud() {
+  if (!boardRef) return;
+  boardRef.set({ columns, cards, globalPerRow }).catch(err => {
+    console.error('No se pudo guardar en la nube:', err);
+    showToast('No se pudo sincronizar con la nube.', 'error');
+  });
+}
+
 // Colores de ticket: todos tomados de paleta-colores.md
 // (brand-*, accent-* y neutros light)
 const COLORS = [
@@ -2758,6 +2839,11 @@ const COLORS = [
 ];
 
 const COL_DOTS = ['#506165', '#225258', '#FF5500', '#2C6A72', '#AC3900', '#479BA1'];
+
+// Encabezados y anchos compartidos entre la plantilla de importación y la exportación,
+// para que un archivo exportado se pueda volver a importar sin ajustes.
+const XLSX_HEADERS = ['titulo', 'descripcion', 'responsable', 'etiqueta', 'columna', 'color'];
+const XLSX_COL_WIDTHS = [{ wch: 32 }, { wch: 40 }, { wch: 22 }, { wch: 18 }, { wch: 20 }, { wch: 12 }];
 
 // Colores anteriores (fuera de la paleta) → equivalente en la paleta
 const LEGACY_COLOR_MAP = {
@@ -2803,6 +2889,9 @@ function saveState() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ columns, cards, globalPerRow }));
   } catch(e) {}
+  // No reenviar a la nube si este guardado vino de aplicar un cambio remoto
+  // (evitaría un ciclo infinito de escrituras).
+  if (!applyingRemote) pushBoardToCloud();
 }
 
 // ── Guardar estado dentro del propio archivo HTML ─────────
@@ -3393,6 +3482,18 @@ function deleteCard(cardId) {
   render();
 }
 
+// ── Limpiar tablero ──────────────────────────────────────
+function clearBoard() {
+  if (cards.length === 0) {
+    showToast('El tablero ya está vacío.', 'warning');
+    return;
+  }
+  if (!confirm(`¿Eliminar los ${cards.length} ticket(s) del tablero? Esta acción no se puede deshacer.`)) return;
+  cards = [];
+  render();
+  showToast('Tablero limpiado: se eliminaron todos los tickets.', 'success');
+}
+
 // ── Add Column ────────────────────────────────────────────
 function addColumn() {
   const title = prompt('Nombre de la nueva columna:');
@@ -3408,9 +3509,6 @@ function downloadTemplate() {
     alert('La librería SheetJS no está disponible. Verifica tu conexión a internet.');
     return;
   }
-
-  // Encabezados
-  const headers = ['titulo', 'descripcion', 'responsable', 'etiqueta', 'columna', 'color'];
 
   const sampleAssignees = ['Juan Pérez', 'María Gómez', '', 'Carlos Ruiz'];
 
@@ -3428,18 +3526,9 @@ function downloadTemplate() {
   });
 
   // Construir hoja
-  const wsData = [headers, ...exampleRows];
+  const wsData = [XLSX_HEADERS, ...exampleRows];
   const ws = XLSX.utils.aoa_to_sheet(wsData);
-
-  // Ancho de columnas
-  ws['!cols'] = [
-    { wch: 32 }, // titulo
-    { wch: 40 }, // descripcion
-    { wch: 22 }, // responsable
-    { wch: 18 }, // etiqueta
-    { wch: 20 }, // columna
-    { wch: 12 }, // color
-  ];
+  ws['!cols'] = XLSX_COL_WIDTHS;
 
   // Pestaña con referencia de colores válidos
   const refData = [
@@ -3459,6 +3548,45 @@ function downloadTemplate() {
   XLSX.utils.book_append_sheet(wb, wsRef, 'Referencia');
 
   XLSX.writeFile(wb, 'plantilla_kanban_nd_sales.xlsx');
+}
+
+// ── Exportar tickets actuales a Excel ────────────────────
+function exportTickets() {
+  if (typeof XLSX === 'undefined') {
+    alert('La librería SheetJS no está disponible. Verifica tu conexión a internet.');
+    return;
+  }
+  if (cards.length === 0) {
+    showToast('No hay tickets para exportar.', 'warning');
+    return;
+  }
+
+  const colTitleById = {};
+  columns.forEach(c => { colTitleById[c.id] = c.title; });
+
+  // Mismas columnas/orden que la plantilla de importación, con los datos reales del tablero
+  const rows = cards.map(card => {
+    const colorMatch = COLORS.find(c => c.value.toLowerCase() === (card.color || '').toLowerCase());
+    return [
+      card.title,
+      card.desc || '',
+      card.assignee || '',
+      card.tag || '',
+      colTitleById[card.colId] || '',
+      colorMatch ? colorMatch.name : (card.color || ''),
+    ];
+  });
+
+  const wsData = [XLSX_HEADERS, ...rows];
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  ws['!cols'] = XLSX_COL_WIDTHS;
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Tickets');
+
+  const fecha = new Date().toISOString().slice(0, 10);
+  XLSX.writeFile(wb, `tickets_kanban_nd_sales_${fecha}.xlsx`);
+  showToast(`Se exportaron ${cards.length} ticket(s) a Excel.`, 'success');
 }
 
 // ── Import Excel ──────────────────────────────────────────
@@ -3786,6 +3914,7 @@ function toggleTheme() {
 // ── Init ──────────────────────────────────────────────────
 applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 render();
+startCloudSync();
 </script>
 
 
