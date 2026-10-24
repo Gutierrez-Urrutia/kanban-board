@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanban Board Proyecto ND SALES V2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Paleta NoonDalton - Tokens por tema ── */
+  :root, [data-theme="light"] {
+    --bg:                 #F6F9F9;
+    --header-bg:          linear-gradient(135deg, #1B434A 0%, #102A2E 100%);
+    --header-text:        #FFFFFF;
+    --header-border:      #15363B;
+    --primary:            #225258;
+    --primary-hover:      #1B434A;
+    --primary-light:      #EDF7F7;
+    --accent:             #FF5500;
+    --accent-hover:       #D44600;
+    --accent-light:       #FFF3ED;
+    --col-bg:             #EDF2F2;
+    --col-border:         #DEE5E6;
+    --col-title:          #172224;
+    --col-count-bg:       #DEE5E6;
+    --col-count-color:    #506165;
+    --col-add-color:      #6A7E82;
+    --col-add-hover:      #225258;
+    --card-bg:            #FFFFFF;
+    --card-title:         #172224;
+    --card-desc:          #506165;
+    --card-border:        #DEE5E6;
+    --card-shadow:        0 1px 3px rgba(16, 42, 46, 0.08), 0 4px 12px rgba(16, 42, 46, 0.04);
+    --card-hover-shadow:  0 6px 18px rgba(16, 42, 46, 0.12);
+    --add-col-bg:         rgba(34, 82, 88, 0.04);
+    --add-col-border:     rgba(34, 82, 88, 0.18);
+    --add-col-border-hover: rgba(34, 82, 88, 0.4);
+    --add-col-color:      #6A7E82;
+    --add-col-color-hover:#225258;
+    --modal-bg:           #FFFFFF;
+    --modal-title:        #172224;
+    --label-color:        #506165;
+    --input-bg:           #FFFFFF;
+    --input-border:       #C5D0D2;
+    --input-color:        #172224;
+    --input-focus-border: #225258;
+    --hint-bg:            #F6F9F9;
+    --hint-border:        #DEE5E6;
+    --code-bg:            #DEE5E6;
+    --drop-border:        #C5D0D2;
+    --drop-color:         #506165;
+    --preview-border:     #DEE5E6;
+    --preview-th-bg:      #F6F9F9;
+    --preview-td-border:  #EDF2F2;
+    --preview-td-color:   #172224;
+    --btn-cancel-border:  #C5D0D2;
+    --btn-cancel-color:   #506165;
+    --btn-cancel-hover:   #EDF2F2;
+    --theme-btn-bg:       rgba(255, 255, 255, 0.12);
+    --theme-btn-color:    #FFFFFF;
+    --theme-btn-hover:    rgba(255, 255, 255, 0.22);
+    --dd-bg:              #FFFFFF;
+    --dd-border:          #DEE5E6;
+    --dd-text:            #172224;
+    --dd-muted:           #6A7E82;
+    --dd-hover:           #F6F9F9;
+    --dd-shadow:          0 12px 32px rgba(16, 42, 46, 0.14);
+  }
+
+  [data-theme="dark"] {
+    --bg:                 #070C0E;
+    --header-bg:          linear-gradient(135deg, #102428 0%, #091416 100%);
+    --header-text:        #F6F9F9;
+    --header-border:      #184248;
+    --primary:            #2E7F88;
+    --primary-hover:      #368D95;
+    --primary-light:      rgba(46, 127, 136, 0.15);
+    --accent:             #FF5500;
+    --accent-hover:       #FF6D24;
+    --accent-light:       rgba(255, 85, 0, 0.15);
+    --col-bg:             #182A2F;
+    --col-border:         #2A3D41;
+    --col-title:          #E8EFF0;
+    --col-count-bg:       #1E2C2F;
+    --col-count-color:    #869A9E;
+    --col-add-color:      #63777B;
+    --col-add-hover:      #E8EFF0;
+    --card-bg:            #213236;
+    --card-title:         #F6F9F9;
+    --card-desc:          #869A9E;
+    --card-border:        #36494E;
+    --card-shadow:        0 2px 6px rgba(0, 0, 0, 0.45);
+    --card-hover-shadow:  0 8px 24px rgba(0, 0, 0, 0.6);
+    --add-col-bg:         rgba(255, 255, 255, 0.04);
+    --add-col-border:     rgba(255, 255, 255, 0.1);
+    --add-col-border-hover: rgba(255, 255, 255, 0.25);
+    --add-col-color:      rgba(255, 255, 255, 0.35);
+    --add-col-color-hover:rgba(255, 255, 255, 0.7);
+    --modal-bg:           #131D1F;
+    --modal-title:        #F6F9F9;
+    --label-color:        #869A9E;
+    --input-bg:           #0A1113;
+    --input-border:       #304145;
+    --input-color:        #F6F9F9;
+    --input-focus-border: #2E7F88;
+    --hint-bg:            #0A1113;
+    --hint-border:        #1E2C2F;
+    --code-bg:            #1E2C2F;
+    --drop-border:        #304145;
+    --drop-color:         #869A9E;
+    --preview-border:     #1E2C2F;
+    --preview-th-bg:      #0A1113;
+    --preview-td-border:  #1E2C2F;
+    --preview-td-color:   #F6F9F9;
+    --btn-cancel-border:  #304145;
+    --btn-cancel-color:   #B0C0C3;
+    --btn-cancel-hover:   #1E2C2F;
+    --theme-btn-bg:       rgba(255, 255, 255, 0.1);
+    --theme-btn-color:    #F6F9F9;
+    --theme-btn-hover:    rgba(255, 255, 255, 0.18);
+    --dd-bg:              #131D1F;
+    --dd-border:          #1E2C2F;
+    --dd-text:            #E8EFF0;
+    --dd-muted:           #869A9E;
+    --dd-hover:           #1E2C2F;
+    --dd-shadow:          0 12px 40px rgba(0, 0, 0, 0.65);
+  }
+
+  [data-theme="noon"] {
+    --bg:                 #FBF8F3;
+    --header-bg:          linear-gradient(135deg, #1F5E66 0%, #163A40 100%);
+    --header-text:        #FFFFFF;
+    --header-border:      #184248;
+    --primary:            #225258;
+    --primary-hover:      #1B434A;
+    --primary-light:      #FFF3ED;
+    --accent:             #FF5500;
+    --accent-hover:       #D44600;
+    --accent-light:       #FFE4D6;
+    --col-bg:             #F5EFE6;
+    --col-border:         #E9E0D2;
+    --col-title:          #1C1A17;
+    --col-count-bg:       #E9E0D2;
+    --col-count-color:    #5C574F;
+    --col-add-color:      #787166;
+    --col-add-hover:      #225258;
+    --card-bg:            #FFFFFF;
+    --card-title:         #1C1A17;
+    --card-desc:          #5C574F;
+    --card-border:        #E9E0D2;
+    --card-shadow:        0 1px 3px rgba(67, 45, 20, 0.08), 0 4px 12px rgba(67, 45, 20, 0.04);
+    --card-hover-shadow:  0 6px 18px rgba(67, 45, 20, 0.12);
+    --add-col-bg:         rgba(34, 82, 88, 0.04);
+    --add-col-border:     rgba(34, 82, 88, 0.18);
+    --add-col-border-hover: rgba(34, 82, 88, 0.4);
+    --add-col-color:      #787166;
+    --add-col-color-hover:#225258;
+    --modal-bg:           #FFFFFF;
+    --modal-title:        #1C1A17;
+    --label-color:        #5C574F;
+    --input-bg:           #FFFFFF;
+    --input-border:       #D6CAB8;
+    --input-color:        #1C1A17;
+    --input-focus-border: #FF5500;
+    --hint-bg:            #FBF8F3;
+    --hint-border:        #E9E0D2;
+    --code-bg:            #E9E0D2;
+    --drop-border:        #D6CAB8;
+    --drop-color:         #5C574F;
+    --preview-border:     #E9E0D2;
+    --preview-th-bg:      #FBF8F3;
+    --preview-td-border:  #F5EFE6;
+    --preview-td-color:   #1C1A17;
+    --btn-cancel-border:  #D6CAB8;
+    --btn-cancel-color:   #5C574F;
+    --btn-cancel-hover:   #F5EFE6;
+    --theme-btn-bg:       rgba(255, 255, 255, 0.12);
+    --theme-btn-color:    #FFFFFF;
+    --theme-btn-hover:    rgba(255, 255, 255, 0.22);
+    --dd-bg:              #FFFFFF;
+    --dd-border:          #E9E0D2;
+    --dd-text:            #1C1A17;
+    --dd-muted:           #787166;
+    --dd-hover:           #FBF8F3;
+    --dd-shadow:          0 12px 32px rgba(67, 45, 20, 0.14);
+  }
+
+  body {
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--card-title);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background .25s, color .25s;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--header-bg);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--header-border);
+    flex-shrink: 0;
+    transition: background .25s, border-color .25s;
+  }
+  header h1 { color: var(--header-text); font-size: 18px; font-weight: 700; letter-spacing: .3px; }
+  header h1 span { color: var(--accent); }
+
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  /* ── Theme toggle button ── */
+  .btn-theme {
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-color);
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 7px 11px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background .15s, border-color .15s;
+    line-height: 1;
+    font-family: inherit;
+  }
+  .btn-theme:hover { background: var(--theme-btn-hover); border-color: rgba(255,255,255,.25); }
+  .btn-theme .theme-label { font-size: 12px; font-weight: 600; }
+
+  .btn-new {
+    background: #D3EBEC;
+    color: #15363B;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background .15s, transform .1s;
+    font-family: inherit;
+  }
+  .btn-new:hover { background: #A9D6D8; }
+
+  /* ── Hamburger button ── */
+  .btn-menu {
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-color);
+    border: 1px solid rgba(255,255,255,.12);
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .15s, border-color .15s;
+    flex-shrink: 0;
+  }
+  .btn-menu:hover  { background: var(--theme-btn-hover); border-color: rgba(255,255,255,.25); }
+  .btn-menu.open   { background: var(--theme-btn-hover); border-color: rgba(255,255,255,.25); }
+
+  /* ── Dropdown menu ── */
+  .menu-wrap {
+    position: relative;
+  }
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: var(--dd-bg);
+    border: 1px solid var(--dd-border);
+    border-radius: 12px;
+    box-shadow: var(--dd-shadow);
+    min-width: 300px;
+    z-index: 200;
+    padding: 10px;
+    transition: background .25s, border-color .25s;
+  }
+  .dropdown.open { display: block; }
+
+  .dd-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dd-muted);
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    padding: 12px 12px 6px;
+  }
+  .dropdown > .dd-section-label:first-child { padding-top: 6px; }
+  .dd-sep {
+    height: 1px;
+    background: var(--dd-border);
+    margin: 8px 0 2px;
+    opacity: .7;
+  }
+  .dd-item {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--dd-text);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    transition: background .12s;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .dd-item:hover { background: var(--dd-hover); }
+  .dd-item svg   { flex-shrink: 0; opacity: .75; width: 16px; height: 16px; }
+  .dd-item .dd-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+
+  /* density row inside dropdown */
+  .dd-density {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px 10px;
+    gap: 12px;
+  }
+  .dd-density-label {
+    font-size: 14px;
+    color: var(--dd-text);
+    font-weight: 500;
+    flex: 1;
+  }
+  .dropdown .global-layout { padding: 4px; gap: 4px; }
+  .dropdown .col-layout-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+    color: var(--dd-muted);
+  }
+  .dropdown .col-layout-btn:hover { color: var(--dd-text); border-color: var(--dd-border); }
+  .dropdown .col-layout-btn.active { color: var(--primary); border-color: var(--primary); background: var(--primary-light); }
+
+  /* keep these styles, used inside dropdown too */
+  .btn-equalcols, .btn-import, .btn-addcol { display: none; } /* hidden – replaced by dropdown */
+
+  /* ── Board ── */
+  #board {
+    display: flex;
+    gap: 16px;
+    padding: 24px;
+    flex: 1;
+    align-items: flex-start;
+    overflow-x: hidden;
+  }
+
+  /* ── Column ── */
+  .column {
+    background: var(--col-bg);
+    border-radius: 10px;
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    transition: background .25s;
+  }
+
+  /* resize handle */
+  .col-resizer {
+    position: absolute;
+    top: 0;
+    right: -4px;
+    width: 8px;
+    height: 100%;
+    cursor: col-resize;
+    z-index: 10;
+    border-radius: 4px;
+  }
+  .col-resizer:hover, .col-resizer.resizing { background: var(--accent); opacity: .7; }
+
+  .col-header {
+    padding: 12px 14px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--col-border);
+  }
+  .col-title-wrap { display: flex; align-items: center; gap: 8px; overflow: hidden; }
+  .col-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .col-title { color: var(--col-title); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .col-count {
+    background: var(--col-count-bg);
+    color: var(--col-count-color);
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 1px 7px;
+    flex-shrink: 0;
+  }
+  .col-add {
+    background: none;
+    border: none;
+    color: var(--col-add-color);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 2px;
+    border-radius: 4px;
+    transition: color .15s;
+    flex-shrink: 0;
+  }
+  .col-add:hover { color: var(--col-add-hover); }
+
+  .cards {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 60px;
+    align-content: flex-start;
+  }
+  .cards.drag-over    { background: var(--primary-light); border-radius: 6px; outline: 1px dashed var(--primary); }
+  .cards.drag-invalid { background: rgba(172,57,0,.12); border-radius: 6px; outline: 1px dashed #AC3900; }
+
+  /* ── Toast Notifications ── */
+  .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .toast {
+    pointer-events: auto;
+    background: #263538;
+    color: #F6F9F9;
+    border: 1px solid #3A4A4E;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 10px 25px rgba(0,0,0,.35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity .2s, transform .2s;
+    max-width: 360px;
+    line-height: 1.4;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error   { border-left: 4px solid #AC3900; }
+  .toast.success { border-left: 4px solid #479BA1; }
+  .toast.warning { border-left: 4px solid #FF5500; }
+
+  /* ── Card (post-it cuadrado) ── */
+  .card {
+    background: var(--card-bg);
+    border-radius: 6px;
+    padding: 11px;
+    cursor: grab;
+    border-top: 4px solid var(--accent);
+    border-left: 1px solid var(--card-border);
+    border-right: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+    transition: box-shadow .15s, opacity .15s, transform .1s, background .2s;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* ancho controlado por JS vía --per-row en el contenedor */
+    flex-shrink: 0;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--card-hover-shadow); }
+  .card:active { cursor: grabbing; }
+  .card.dragging { opacity: .4; box-shadow: none; transform: none; }
+  .card.drop-before { box-shadow: 0 -4px 0 0 var(--accent), var(--card-shadow); }
+  .card.drop-after  { box-shadow: 0  4px 0 0 var(--accent), var(--card-shadow); }
+  .cards[data-per-row="2"] .card.drop-before,
+  .cards[data-per-row="3"] .card.drop-before { box-shadow: -4px 0 0 0 var(--accent), var(--card-shadow); }
+  .cards[data-per-row="2"] .card.drop-after,
+  .cards[data-per-row="3"] .card.drop-after  { box-shadow:  4px 0 0 0 var(--accent), var(--card-shadow); }
+  /* tamaño de texto según densidad de columna */
+  .card-title { font-size: 12px; font-weight: 700; color: var(--card-title); line-height: 1.4; word-break: break-word; }
+  .card-desc  { font-size: 11px; color: var(--card-desc); margin-top: 4px; line-height: 1.4; word-break: break-word; flex: 1; overflow: hidden; }
+  .cards[data-per-row="2"] .card-title { font-size: 10px; }
+  .cards[data-per-row="2"] .card-desc  { font-size: 9px; }
+  .cards[data-per-row="3"] .card-title { font-size: 9px; }
+  .cards[data-per-row="3"] .card-desc  { font-size: 8px; }
+  .card-assignee-wrap {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+  }
+  .card-assignee {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: rgba(0,0,0,.05);
+    color: var(--card-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid rgba(0,0,0,.06);
+  }
+  [data-theme="dark"] .card-assignee {
+    background: rgba(255,255,255,.08);
+    color: #DEE5E6;
+    border-color: rgba(255,255,255,.1);
+  }
+  .cards[data-per-row="2"] .card-assignee { font-size: 9px; padding: 1px 5px; }
+  .cards[data-per-row="3"] .card-assignee { font-size: 8px; padding: 1px 4px; }
+
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 6px; gap: 4px; }
+  .card-tag {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: #D3EBEC;
+    color: #1B434A;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75%;
+    flex-shrink: 1;
+  }
+  .cards[data-per-row="2"] .card-tag { font-size: 8px; padding: 1px 4px; }
+  .cards[data-per-row="3"] .card-tag { display: none; }
+  .card-actions { display: flex; gap: 2px; flex-shrink: 0; }
+  .card-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    color: #96A7AA;
+    padding: 2px 3px;
+    border-radius: 4px;
+    transition: color .12s;
+    line-height: 1;
+  }
+  .cards[data-per-row="2"] .card-btn,
+  .cards[data-per-row="3"] .card-btn { font-size: 10px; padding: 1px 2px; }
+  .card-btn:hover { color: #172224; }
+
+  /* ── Layout toggle global (header) ── */
+  .global-layout {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    background: var(--theme-btn-bg);
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .col-layout-btn {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 2px 5px;
+    cursor: pointer;
+    color: var(--col-add-color);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    transition: color .12s, border-color .12s, background .12s;
+  }
+  .col-layout-btn:hover { color: var(--col-add-hover); border-color: var(--col-border); }
+  .col-layout-btn.active {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--primary-light);
+  }
+
+  /* ── Btn agregar columna (header) ── */
+  .btn-addcol {
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-color);
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background .15s;
+    white-space: nowrap;
+  }
+  .btn-addcol:hover { background: var(--theme-btn-hover); }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--modal-bg);
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    width: 400px;
+    max-width: 95vw;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    transition: background .25s;
+  }
+  .modal h2 { font-size: 16px; font-weight: 700; margin-bottom: 18px; color: var(--modal-title); }
+  .form-row { margin-bottom: 14px; }
+  .form-row label { display: block; font-size: 12px; font-weight: 600; color: var(--label-color); margin-bottom: 5px; }
+  .form-row input, .form-row textarea, .form-row select {
+    width: 100%;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--input-color);
+    background: var(--input-bg);
+    outline: none;
+    transition: border-color .15s, background .25s;
+  }
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: var(--input-focus-border); outline: none; }
+  .form-row textarea { resize: vertical; min-height: 72px; }
+
+  .color-picker { display: flex; gap: 8px; flex-wrap: wrap; }
+  .color-opt {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform .1s, border-color .1s;
+  }
+  .color-opt.selected { border-color: var(--modal-title); transform: scale(1.18); box-shadow: 0 0 0 2px var(--modal-bg); }
+
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+  .btn-cancel {
+    background: none; border: 1px solid var(--btn-cancel-border); color: var(--btn-cancel-color);
+    padding: 7px 16px; border-radius: 6px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .12s;
+    font-family: inherit;
+  }
+  .btn-cancel:hover { background: var(--btn-cancel-hover); }
+  .btn-save {
+    background: var(--primary); color: #fff; border: none;
+    padding: 7px 18px; border-radius: 6px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .12s;
+    font-family: inherit;
+  }
+  .btn-save:hover { background: var(--primary-hover); }
+
+  /* ── Import Modal ── */
+  .import-modal {
+    background: var(--modal-bg);
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    width: 520px;
+    max-width: 95vw;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    transition: background .25s;
+  }
+  .import-modal h2 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--modal-title); }
+  .import-hint {
+    font-size: 12px;
+    color: var(--label-color);
+    margin-bottom: 16px;
+    line-height: 1.5;
+    background: var(--hint-bg);
+    border: 1px solid var(--hint-border);
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .import-hint code {
+    background: var(--code-bg);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-family: monospace;
+    font-size: 11px;
+  }
+  .drop-zone {
+    border: 2px dashed var(--drop-border);
+    border-radius: 8px;
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    color: var(--drop-color);
+    font-size: 13px;
+  }
+  .drop-zone:hover, .drop-zone.drag-active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+  .drop-zone .dz-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+  .import-preview {
+    margin-top: 14px;
+    max-height: 180px;
+    overflow-y: auto;
+    border: 1px solid var(--preview-border);
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .import-preview table { width: 100%; border-collapse: collapse; }
+  .import-preview th {
+    background: var(--preview-th-bg);
+    padding: 6px 10px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--label-color);
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    border-bottom: 1px solid var(--preview-border);
+    position: sticky; top: 0;
+  }
+  .import-preview td {
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--preview-td-border);
+    color: var(--preview-td-color);
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .import-preview tr:last-child td { border-bottom: none; }
+  .import-count { margin-top: 8px; font-size: 12px; color: var(--label-color); text-align: right; }
+
+  .btn-template {
+    background: none;
+    border: 1px solid var(--btn-cancel-border);
+    color: var(--primary);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .12s;
+    font-family: inherit;
+  }
+  .btn-template:hover { background: var(--primary-light); }
+
+  /* ── Modal vista ticket ── */
+  .card-view-modal {
+    background: var(--modal-bg);
+    border-radius: 14px;
+    width: 480px;
+    max-width: 95vw;
+    box-shadow: 0 24px 64px rgba(0,0,0,.45);
+    overflow: hidden;
+    transition: background .25s;
+  }
+  .cvm-top {
+    height: 6px;
+  }
+  .cvm-body {
+    padding: 24px 28px 20px;
+  }
+  .cvm-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .cvm-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .cvm-assignee {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--label-color);
+    background: var(--hint-bg);
+    border: 1px solid var(--hint-border);
+    border-radius: 10px;
+    padding: 2px 8px;
+  }
+  .cvm-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--modal-title);
+    line-height: 1.35;
+    margin-bottom: 10px;
+    word-break: break-word;
+  }
+  .cvm-desc {
+    font-size: 14px;
+    color: var(--label-color);
+    line-height: 1.6;
+    word-break: break-word;
+    white-space: pre-wrap;
+    min-height: 40px;
+  }
+  .cvm-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px 18px;
+    border-top: 1px solid var(--col-border);
+    gap: 10px;
+  }
+  .cvm-col-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--label-color);
+    font-weight: 600;
+  }
+  .cvm-col-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cvm-actions { display: flex; gap: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Kanban Board <span>Proyecto ND SALES V2</span></h1>
+  <div class="header-actions">
+    <button class="btn-theme" id="btn-theme" onclick="toggleTheme()" title="Cambiar tema">
+      <span id="theme-icon"></span>
+      <span class="theme-label" id="theme-label">Claro</span>
+    </button>
+    <button class="btn-new" onclick="openModal()">＋ Nuevo ticket</button>
+    <div class="menu-wrap">
+      <button class="btn-menu" id="btn-menu" onclick="toggleMenu()" title="Más opciones" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6"  x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="dropdown" id="dropdown">
+
+        <div class="dd-section-label">Columnas</div>
+        <button class="dd-item" onclick="addColumn();closeMenu()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Agregar columna
+        </button>
+        <button class="dd-item" onclick="equalizeColumnWidths();closeMenu()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Igualar ancho de columnas
+        </button>
+
+        <div class="dd-sep"></div>
+        <div class="dd-section-label">Densidad de tickets</div>
+        <div class="dd-density">
+          <span class="dd-density-label">Tickets por fila</span>
+          <div class="global-layout" id="global-layout">
+            <button class="col-layout-btn" id="glb-1" title="1 por fila" onclick="setGlobalPerRow(1)">▪</button>
+            <button class="col-layout-btn" id="glb-2" title="2 por fila" onclick="setGlobalPerRow(2)">▪▪</button>
+            <button class="col-layout-btn" id="glb-3" title="3 por fila" onclick="setGlobalPerRow(3)">▪▪▪</button>
+          </div>
+        </div>
+
+        <div class="dd-sep"></div>
+        <div class="dd-section-label">Importar</div>
+        <button class="dd-item" onclick="openImportModal();closeMenu()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Importar desde Excel
+        </button>
+
+        <div class="dd-sep"></div>
+        <div class="dd-section-label">Archivo</div>
+        <button class="dd-item" onclick="saveToFile();closeMenu()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Guardar en archivo
+        </button>
+
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="board">
+  <!-- Columns rendered by JS -->
+</div>
+
+<!-- Modal: Vista ticket -->
+<div class="modal-overlay" id="view-modal">
+  <div class="card-view-modal">
+    <div class="cvm-top" id="cvm-top"></div>
+    <div class="cvm-body">
+      <div class="cvm-meta" id="cvm-meta">
+        <div id="cvm-tag"></div>
+        <div id="cvm-assignee"></div>
+      </div>
+      <div class="cvm-title" id="cvm-title"></div>
+      <div class="cvm-desc"  id="cvm-desc"></div>
+    </div>
+    <div class="cvm-footer">
+      <div class="cvm-col-badge">
+        <span class="cvm-col-dot" id="cvm-col-dot"></span>
+        <span id="cvm-col-name"></span>
+      </div>
+      <div class="cvm-actions">
+        <button class="btn-cancel" id="cvm-edit-btn">✏️ Editar</button>
+        <button class="btn-cancel" onclick="closeViewModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Nuevo / Editar ticket -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2 id="modal-title">Nuevo ticket</h2>
+    <div class="form-row">
+      <label>Título *</label>
+      <input id="f-title" type="text" placeholder="Ej: Diseñar pantalla login">
+    </div>
+    <div class="form-row">
+      <label>Descripción</label>
+      <textarea id="f-desc" placeholder="Detalles opcionales…"></textarea>
+    </div>
+    <div class="form-row">
+      <label>Responsable <span style="font-size:11px;font-weight:400;color:var(--label-color)">(opcional)</span></label>
+      <input id="f-assignee" type="text" placeholder="Ej: Juan Pérez">
+    </div>
+    <div class="form-row">
+      <label>Etiqueta</label>
+      <input id="f-tag" type="text" placeholder="Ej: Frontend, Bug, Urgente">
+    </div>
+    <div class="form-row">
+      <label>Color del ticket</label>
+      <div class="color-picker" id="color-picker"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveCard()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Asignar Responsable Obligatorio (drag & drop a En desarrollo) -->
+<div class="modal-overlay" id="assign-modal">
+  <div class="modal" style="width: 400px;">
+    <h2>Asignar Responsable</h2>
+    <p style="font-size: 13px; color: var(--label-color); margin-bottom: 14px; line-height: 1.5;">
+      Para mover el ticket <strong id="assign-ticket-title" style="color: var(--modal-title)"></strong> a <em style="font-style:normal;font-weight:600;color:var(--accent);">En desarrollo</em>, es obligatorio indicar el responsable a cargo.
+    </p>
+    <div class="form-row">
+      <label>Nombre del responsable *</label>
+      <input id="f-assign-name" type="text" placeholder="Ej: Juan Pérez" autocomplete="off">
+      <div id="assign-error" style="color: #AC3900; font-size: 11px; margin-top: 5px; display: none; font-weight: 600;">⚠️ Debes indicar un responsable para continuar.</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeAssignModal()">Cancelar</button>
+      <button class="btn-save" onclick="confirmAssignAndMove()">Asignar y avanzar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Modal: Importar Excel -->
+<div class="modal-overlay" id="import-modal">
+  <div class="import-modal">
+    <h2>Importar tickets desde Excel</h2>
+    <div class="import-hint">
+      Fila 1 = encabezados exactos. Solo <code>titulo</code> es obligatorio.<br>
+      En <code>responsable</code> puedes ingresar la persona a cargo (opcional).<br>
+      En <code>columna</code> escribe el nombre exacto de una columna del tablero.<br>
+      En <code>color</code> usa: <code>Teal</code> · <code>Naranja</code> · <code>Cian</code> · <code>Petróleo</code> · <code>Durazno</code> · <code>Óxido</code> · <code>Siena</code> · <code>Pizarra</code>
+    </div>
+    <div style="text-align:right;margin-bottom:10px">
+      <button class="btn-template" onclick="downloadTemplate()">⬇ Descargar plantilla .xlsx</button>
+    </div>
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+      <span class="dz-icon">📂</span>
+      Haz clic o arrastra tu archivo <strong>.xlsx / .xls / .csv</strong> aquí
+      <input type="file" id="file-input" accept=".xlsx,.xls,.csv" style="display:none">
+    </div>
+    <div id="import-preview-wrap" style="display:none">
+      <div class="import-preview" id="import-preview-table"></div>
+      <div class="import-count" id="import-count"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeImportModal()">Cancelar</button>
+      <button class="btn-save" id="btn-do-import" onclick="doImport()" disabled>Importar</button>
+    </div>
+  </div>
+</div>
+
+<!-- SheetJS (CDN para parseo de Excel/CSV) -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+<!-- Datos embebidos: saveToFile() actualiza este bloque al guardar en disco -->
+<script id="initial-data" type="application/json">
+null
+</script>
+
+<script>
+// ── State ────────────────────────────────────────────────
+const STORAGE_KEY = 'kanban_nd_sales_v2';
+
+// Colores de ticket: todos tomados de paleta-colores.md
+// (brand-*, accent-* y neutros light)
+const COLORS = [
+  { name:'Teal',     value:'#225258' }, // brand-600
+  { name:'Naranja',  value:'#FF5500' }, // accent-600
+  { name:'Cian',     value:'#479BA1' }, // brand-400
+  { name:'Petróleo', value:'#2C6A72' }, // brand-500
+  { name:'Durazno',  value:'#FF884C' }, // accent-400
+  { name:'Óxido',    value:'#AC3900' }, // accent-800
+  { name:'Siena',    value:'#852C00' }, // accent-900
+  { name:'Pizarra',  value:'#506165' }, // n-600
+];
+
+const COL_DOTS = ['#506165', '#225258', '#FF5500', '#2C6A72', '#AC3900', '#479BA1'];
+
+// Colores anteriores (fuera de la paleta) → equivalente en la paleta
+const LEGACY_COLOR_MAP = {
+  '#16a34a': '#2C6A72', // Verde   → Petróleo
+  '#d97706': '#FF884C', // Ámbar   → Durazno
+  '#7c3aed': '#AC3900', // Violeta → Óxido
+  '#e11d48': '#852C00', // Rosa    → Siena
+  '#2e7f88': '#479BA1', // Cian    → Cian (brand-400)
+};
+function migrateLegacyColor(c) {
+  return (c && LEGACY_COLOR_MAP[c.toLowerCase()]) || c;
+}
+function migrateLegacyState(state) {
+  if (!state) return state;
+  (state.columns || []).forEach(col => {
+    col.dot = migrateLegacyColor(col.dot);
+    if (col.title === 'En progreso') {
+      col.title = 'En desarrollo';
+    } else if (col.title === 'Revisión') {
+      col.title = 'QA';
+    }
+  });
+  (state.cards || []).forEach(card => { card.color = migrateLegacyColor(card.color); });
+  return state;
+}
+
+// ── Persistencia ─────────────────────────────────────────
+function loadState() {
+  // 1. Intentar desde localStorage (sesión activa / cambios recientes)
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return migrateLegacyState(JSON.parse(raw));
+  } catch(e) {}
+  // 2. Fallback: datos embebidos en el propio archivo HTML
+  try {
+    const raw = document.getElementById('initial-data').textContent.trim();
+    if (raw && raw !== 'null') return migrateLegacyState(JSON.parse(raw));
+  } catch(e) {}
+  return null;
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ columns, cards, globalPerRow }));
+  } catch(e) {}
+}
+
+// ── Guardar estado dentro del propio archivo HTML ─────────
+let _fileHandle = null; // handle reutilizable entre guardados
+
+async function saveToFile() {
+  const stateJson = JSON.stringify({ columns, cards, globalPerRow }, null, 2);
+
+  // Obtener el HTML actual y actualizar el bloque de datos embebidos
+  const currentHtml = document.documentElement.outerHTML;
+  const updated = currentHtml.replace(
+    /(<script\s+id="initial-data"[^>]*>)([\s\S]*?)(<\/script>)/,
+    (_, open, _old, close) => `${open}\n${stateJson}\n    ${close}`
+  );
+
+  // Verificar soporte de File System Access API
+  if (!('showSaveFilePicker' in window)) {
+    // Fallback: descarga directa del archivo
+    const blob = new Blob([updated], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'kanban.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('Archivo descargado. Reemplaza el original con este archivo.', 'warning');
+    return;
+  }
+
+  try {
+    // Reutilizar handle si ya se obtuvo previamente
+    if (!_fileHandle) {
+      _fileHandle = await window.showSaveFilePicker({
+        suggestedName: 'kanban.html',
+        types: [{ description: 'Archivo HTML', accept: { 'text/html': ['.html'] } }],
+      });
+    }
+    const writable = await _fileHandle.createWritable();
+    await writable.write(updated);
+    await writable.close();
+    showToast('Tablero guardado en el archivo correctamente.', 'success');
+  } catch(e) {
+    if (e.name !== 'AbortError') {
+      showToast('No se pudo guardar: ' + e.message, 'error');
+    }
+    _fileHandle = null; // resetear handle en caso de error
+  }
+}
+
+// ── Inicialización con persistencia ──────────────────────
+const savedState = loadState();
+
+let columns = savedState ? savedState.columns : [
+  { id: uid(), title: 'Por hacer',     dot: '#506165' },
+  { id: uid(), title: 'En desarrollo', dot: '#225258' },
+  { id: uid(), title: 'QA',            dot: '#FF5500' },
+  { id: uid(), title: 'Listo',         dot: '#2C6A72' },
+];
+
+let cards = savedState ? savedState.cards : [
+  { id: uid(), colId: columns[0].id, title: 'Revisar requerimientos', desc: 'Leer el documento de spec v2', tag: 'Análisis', assignee: 'Pablo', color: '#506165' },
+  { id: uid(), colId: columns[1].id, title: 'Implementar login', desc: 'OAuth 2.0 con Google', tag: 'Frontend', assignee: 'Ana M.', color: '#225258' },
+  { id: uid(), colId: columns[2].id, title: 'Test API productos', desc: '', tag: 'QA', assignee: '', color: '#FF5500' },
+  { id: uid(), colId: columns[3].id, title: 'Deploy staging', desc: 'Configurar pipeline CI', tag: 'DevOps', assignee: 'Carlos R.', color: '#2C6A72' },
+];
+
+let globalPerRow   = savedState?.globalPerRow || 1;
+let editingCardId  = null;
+let selectedColor  = COLORS[0].value;
+let dragCardId     = null;
+let dragOverCol    = null;
+let dragOverCardId = null; // card destino para reordenar dentro de la misma columna
+let dragOverPos    = null; // 'before' | 'after'
+let pendingImport  = [];
+
+function uid() { return Math.random().toString(36).slice(2, 10); }
+
+// ── Render ────────────────────────────────────────────────
+function render() {
+  const board = document.getElementById('board');
+
+  // Remove old columns
+  [...board.querySelectorAll('.column')].forEach(c => c.remove());
+
+  columns.forEach(col => {
+    const colCards = cards.filter(c => c.colId === col.id);
+    const el = document.createElement('div');
+    el.className = 'column';
+    el.dataset.colId = col.id;
+
+    // Restaurar ancho guardado
+    const savedW = col.width ? col.width + 'px' : '280px';
+    el.style.width    = savedW;
+    el.style.minWidth = savedW;
+
+    const perRow = globalPerRow;
+    col.perRow = perRow; // sincronizar estado
+
+    const isFirstCol = col.id === columns[0].id;
+
+    el.innerHTML = `
+      <div class="col-header">
+        <div class="col-title-wrap">
+          <span class="col-dot" style="background:${col.dot}"></span>
+          <span class="col-title">${esc(col.title)}</span>
+          <span class="col-count">${colCards.length}</span>
+        </div>
+        ${isFirstCol ? `<button class="col-add" title="Agregar ticket en Por hacer" onclick="openModal()">＋</button>` : ''}
+      </div>
+      <div class="cards" data-col="${col.id}" data-per-row="${perRow}" id="cards-${col.id}"></div>
+      <div class="col-resizer" data-col="${col.id}"></div>
+    `;
+
+    board.appendChild(el);
+
+    const cardsEl = el.querySelector('.cards');
+    colCards.forEach(card => cardsEl.appendChild(makeCard(card)));
+    applyCardWidths(cardsEl, perRow);
+
+    // Drop zone events
+    cardsEl.addEventListener('dragover', e => { e.preventDefault(); highlightDrop(col.id); });
+    cardsEl.addEventListener('dragleave', e => { if (!cardsEl.contains(e.relatedTarget)) { clearHighlight(); clearDropIndicator(); } });
+    cardsEl.addEventListener('drop', e => { e.preventDefault(); dropCard(col.id); });
+  });
+
+  equalizeColumnHeights();
+  attachResizers();
+  // Sincronizar botones del header global
+  [1, 2, 3].forEach(i => {
+    const btn = document.getElementById('glb-' + i);
+    if (btn) btn.classList.toggle('active', i === globalPerRow);
+  });
+  saveState();
+}
+
+// ── Layout por fila (1 / 2 / 3 tickets por fila) ─────────
+function applyCardWidths(cardsEl, perRow) {
+  const gap = 8;
+  // La fórmula resta los gaps internos y divide entre perRow
+  const w = perRow === 1
+    ? '100%'
+    : `calc((100% - ${gap * (perRow - 1)}px) / ${perRow})`;
+  cardsEl.style.setProperty('--card-w', w);
+  // Aplica el ancho a todos los cards hijos (ya existentes o futuros)
+  cardsEl.querySelectorAll('.card').forEach(c => { c.style.width = w; });
+}
+
+function setGlobalPerRow(n) {
+  globalPerRow = n;
+  // Aplicar a todas las columnas sin re-render completo
+  columns.forEach(col => {
+    col.perRow = n;
+    const cardsEl = document.getElementById('cards-' + col.id);
+    if (!cardsEl) return;
+    cardsEl.setAttribute('data-per-row', n);
+    applyCardWidths(cardsEl, n);
+  });
+  // Actualizar botones del header
+  [1, 2, 3].forEach(i => {
+    document.getElementById('glb-' + i).classList.toggle('active', i === n);
+  });
+  equalizeColumnHeights();
+  saveState();
+}
+
+// ── Igualar altura de columnas ────────────────────────────
+function equalizeColumnHeights() {
+  const cols = [...document.querySelectorAll('.column')];
+  if (cols.length === 0) return;
+
+  // Reset heights para medir correctamente
+  cols.forEach(c => { c.style.minHeight = ''; c.style.height = ''; });
+
+  // Esperar un tick para que el DOM calcule alturas reales
+  requestAnimationFrame(() => {
+    const maxH = Math.max(...cols.map(c => c.scrollHeight));
+    cols.forEach(c => {
+      c.style.minHeight = maxH + 'px';
+    });
+  });
+}
+
+// ── Resize de columnas ────────────────────────────────────
+function attachResizers() {
+  document.querySelectorAll('.col-resizer').forEach(handle => {
+    handle.addEventListener('mousedown', startResize);
+  });
+}
+
+function equalizeColumnWidths() {
+  const colEls = [...document.querySelectorAll('.column')];
+  if (colEls.length === 0) return;
+
+  const board = document.getElementById('board');
+  const boardW = board.getBoundingClientRect().width;
+  const gap = 16;
+  const padding = 48; // 24px cada lado
+  const n = colEls.length;
+  const w = Math.floor((boardW - padding - gap * (n - 1)) / n);
+
+  colEls.forEach(el => {
+    el.style.width    = w + 'px';
+    el.style.minWidth = w + 'px';
+    const col = columns.find(c => c.id === el.dataset.colId);
+    if (col) col.width = w;
+  });
+
+  equalizeColumnHeights();
+  saveState();
+}
+
+function startResize(e) {
+  e.preventDefault();
+  const handle = e.currentTarget;
+  const colEl  = handle.closest('.column');
+  const colId  = handle.dataset.col;
+  const startX = e.clientX;
+  const startW = colEl.getBoundingClientRect().width;
+
+  handle.classList.add('resizing');
+
+  function onMove(ev) {
+    const newW = Math.max(180, startW + (ev.clientX - startX));
+    colEl.style.width    = newW + 'px';
+    colEl.style.minWidth = newW + 'px';
+    // Guardar en state
+    const col = columns.find(c => c.id === colId);
+    if (col) col.width = Math.round(newW);
+    equalizeColumnHeights();
+  }
+
+  function onUp() {
+    handle.classList.remove('resizing');
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+    saveState();
+  }
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+
+function makeCard(card) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.draggable = true;
+  el.dataset.cardId = card.id;
+  el.style.borderTopColor = card.color;
+  // Fondo del card: en tema oscuro usa --card-bg, en claro o noon aplica tinte sutil
+  const theme = document.documentElement.getAttribute('data-theme') || 'light';
+  if (theme === 'dark') {
+    el.style.background = 'var(--card-bg)';
+  } else {
+    const tint = hexToRgba(card.color, 0.04);
+    el.style.background = tint || 'var(--card-bg)';
+  }
+
+  el.innerHTML = `
+    <div class="card-title">${esc(card.title)}</div>
+    ${card.desc ? `<div class="card-desc">${esc(card.desc)}</div>` : '<div class="card-desc"></div>'}
+    ${card.assignee ? `
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: ${esc(card.assignee)}">👤 ${esc(card.assignee)}</span>
+      </div>` : ''}
+    <div class="card-footer">
+      ${card.tag ? `<span class="card-tag" style="background:${card.color}22;color:${card.color}">${esc(card.tag)}</span>` : '<span></span>'}
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('${card.id}')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('${card.id}')">🗑️</button>
+      </div>
+    </div>
+  `;
+
+  // Reordenamiento dentro de la misma columna: indicador visual + drop por card
+  el.addEventListener('dragover', e => {
+    if (!dragCardId || dragCardId === card.id) return;
+    const draggingCard = cards.find(c => c.id === dragCardId);
+    if (!draggingCard || draggingCard.colId !== card.colId) return; // solo misma columna
+    e.preventDefault();    // necesario para que 'drop' dispare en este elemento
+    e.stopPropagation();   // evitar que el contenedor sobreescriba el estado
+    const rect = el.getBoundingClientRect();
+    const cardsEl = el.closest('.cards');
+    const isSingleCol = (parseInt(cardsEl?.dataset?.perRow, 10) || 1) === 1;
+    let pos;
+    if (isSingleCol) {
+      pos = e.clientY < (rect.top + rect.height / 2) ? 'before' : 'after';
+    } else {
+      pos = e.clientX < (rect.left + rect.width / 2) ? 'before' : 'after';
+    }
+    if (dragOverCardId !== card.id || dragOverPos !== pos) {
+      clearDropIndicator();
+      dragOverCardId = card.id;
+      dragOverPos    = pos;
+      el.classList.add(pos === 'before' ? 'drop-before' : 'drop-after');
+    }
+  });
+
+  el.addEventListener('drop', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropCard(card.colId);
+  });
+
+  // Click simple abre la vista; distingue de drag usando flag
+  el.addEventListener('dragstart', () => {
+    dragCardId = card.id;
+    el._dragged = true;
+    setTimeout(() => el.classList.add('dragging'), 0);
+  });
+  el.addEventListener('dragend', () => {
+    el.classList.remove('dragging');
+    clearHighlight();
+    clearDropIndicator();
+    dragCardId = null;
+    setTimeout(() => { el._dragged = false; }, 0);
+  });
+  el.addEventListener('click', e => {
+    // Ignorar clicks en botones de acción y si hubo drag
+    if (e.target.closest('.card-btn')) return;
+    if (el._dragged) return;
+    openViewModal(card.id);
+  });
+
+  return el;
+}
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3), 16);
+  const g = parseInt(hex.slice(3,5), 16);
+  const b = parseInt(hex.slice(5,7), 16);
+  if (isNaN(r)) return null;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ── Validaciones de Drag & Drop ───────────────────────────
+function checkMoveValidity(card, toColId) {
+  if (!card) return { valid: false, reason: '' };
+  if (card.colId === toColId) return { valid: true, same: true };
+
+  const fromIndex = columns.findIndex(c => c.id === card.colId);
+  const toIndex   = columns.findIndex(c => c.id === toColId);
+  if (fromIndex === -1 || toIndex === -1) return { valid: false, reason: 'Columna no válida.' };
+
+  const fromCol = columns[fromIndex];
+  const toCol   = columns[toIndex];
+
+  // Avance hacia adelante (solo 1 columna permitida)
+  if (toIndex > fromIndex) {
+    if (toIndex === fromIndex + 1) {
+      const isToDesarrollo = (fromIndex === 0 && toIndex === 1) ||
+        (fromCol.title.toLowerCase().includes('hacer') && toCol.title.toLowerCase().includes('desarroll'));
+      return { valid: true, requiresAssignee: isToDesarrollo };
+    }
+    return {
+      valid: false,
+      reason: `No puedes saltar columnas. El ticket debe avanzar paso a paso hacia "${columns[fromIndex + 1]?.title || 'la siguiente columna'}".`
+    };
+  }
+
+  // Retroceso hacia atrás (solo QA -> En desarrollo permitido)
+  if (toIndex < fromIndex) {
+    const isQaToDesarrollo = (
+      (fromCol.title.toLowerCase().includes('qa') && toCol.title.toLowerCase().includes('desarroll')) ||
+      (fromIndex === 2 && toIndex === 1)
+    );
+
+    if (toIndex === fromIndex - 1 && isQaToDesarrollo) {
+      return { valid: true, requiresAssignee: false };
+    }
+
+    if (fromCol.title.toLowerCase().includes('list') || fromIndex === columns.length - 1) {
+      return { valid: false, reason: 'No está permitido retroceder tickets desde la columna "Listo".' };
+    }
+
+    if (fromCol.title.toLowerCase().includes('desarroll') || fromIndex === 1) {
+      return { valid: false, reason: 'No está permitido retroceder tickets desde "En desarrollo" a "Por hacer".' };
+    }
+
+    return {
+      valid: false,
+      reason: `No se permite retroceder de "${fromCol.title}" a "${toCol.title}". Solo se permite regresar de "QA" a "En desarrollo".`
+    };
+  }
+
+  return { valid: false, reason: 'Movimiento no permitido.' };
+}
+
+function highlightDrop(colId) {
+  if (dragOverCol === colId) return;
+  clearHighlight();
+  dragOverCol = colId;
+  const el = document.getElementById('cards-' + colId);
+  if (!el) return;
+
+  const card = cards.find(c => c.id === dragCardId);
+  if (card) {
+    const check = checkMoveValidity(card, colId);
+    if (check.same) return;
+    if (check.valid) {
+      el.classList.add('drag-over');
+    } else {
+      el.classList.add('drag-invalid');
+    }
+  }
+}
+
+function clearHighlight() {
+  document.querySelectorAll('.cards.drag-over').forEach(e => e.classList.remove('drag-over'));
+  document.querySelectorAll('.cards.drag-invalid').forEach(e => e.classList.remove('drag-invalid'));
+  dragOverCol = null;
+}
+
+function clearDropIndicator() {
+  document.querySelectorAll('.card.drop-before, .card.drop-after').forEach(e => {
+    e.classList.remove('drop-before', 'drop-after');
+  });
+  dragOverCardId = null;
+  dragOverPos    = null;
+}
+
+function dropCard(colId) {
+  const targetCardId = dragOverCardId;
+  const targetPos    = dragOverPos;
+
+  clearHighlight();
+  clearDropIndicator();
+  if (!dragCardId) return;
+  const card = cards.find(c => c.id === dragCardId);
+  if (!card) return;
+
+  const check = checkMoveValidity(card, colId);
+
+  // ── Reordenamiento dentro de la misma columna ────────────
+  if (check.same) {
+    if (targetCardId && targetCardId !== dragCardId) {
+      const fromIdx  = cards.findIndex(c => c.id === dragCardId);
+      const targetIdx = cards.findIndex(c => c.id === targetCardId);
+      if (fromIdx !== -1 && targetIdx !== -1) {
+        // Remover el card de su posición actual
+        const [moved] = cards.splice(fromIdx, 1);
+        // Recalcular índice destino tras la extracción
+        const newTargetIdx = cards.findIndex(c => c.id === targetCardId);
+        const insertAt = targetPos === 'before' ? newTargetIdx : newTargetIdx + 1;
+        cards.splice(insertAt, 0, moved);
+        saveState();
+        render();
+      }
+    }
+    return;
+  }
+
+  if (!check.valid) {
+    showToast(check.reason, 'error');
+    return;
+  }
+
+  if (check.requiresAssignee) {
+    openAssignModal(card, colId);
+    return;
+  }
+
+  card.colId = colId;
+  saveState();
+  render();
+}
+
+// ── Modal Asignar Responsable Obligatorio ─────────────────
+let pendingAssignCard = null;
+let pendingAssignTargetColId = null;
+
+function openAssignModal(card, targetColId) {
+  pendingAssignCard = card;
+  pendingAssignTargetColId = targetColId;
+  document.getElementById('assign-ticket-title').textContent = card.title;
+  const input = document.getElementById('f-assign-name');
+  input.value = card.assignee || '';
+  input.style.borderColor = '';
+  document.getElementById('assign-error').style.display = 'none';
+  document.getElementById('assign-modal').classList.add('open');
+  setTimeout(() => { input.focus(); input.select(); }, 50);
+}
+
+function closeAssignModal() {
+  document.getElementById('assign-modal').classList.remove('open');
+  pendingAssignCard = null;
+  pendingAssignTargetColId = null;
+}
+
+function confirmAssignAndMove() {
+  if (!pendingAssignCard || !pendingAssignTargetColId) return;
+  const input = document.getElementById('f-assign-name');
+  const name = input.value.trim();
+  if (!name) {
+    input.style.borderColor = '#AC3900';
+    document.getElementById('assign-error').style.display = 'block';
+    input.focus();
+    return;
+  }
+
+  pendingAssignCard.assignee = name;
+  pendingAssignCard.colId = pendingAssignTargetColId;
+  saveState();
+  closeAssignModal();
+  render();
+  showToast(`Ticket asignado a "${name}" y movido a En desarrollo.`, 'success');
+}
+
+function showToast(msg, type = 'error') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = type === 'error' ? `<span>⚠️</span> ${esc(msg)}` : `<span>✓</span> ${esc(msg)}`;
+  container.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add('show'));
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 250);
+  }, 3400);
+}
+
+// ── Modal ticket ─────────────────────────────────────────
+function buildColorPicker(selected) {
+  const cp = document.getElementById('color-picker');
+  cp.innerHTML = '';
+  COLORS.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'color-opt' + (c.value === selected ? ' selected' : '');
+    d.style.background = c.value;
+    d.title = c.name;
+    d.onclick = () => { selectedColor = c.value; buildColorPicker(c.value); };
+    cp.appendChild(d);
+  });
+}
+
+function openModal() {
+  editingCardId   = null;
+  selectedColor   = COLORS[0].value;
+  document.getElementById('modal-title').textContent = 'Nuevo ticket';
+  document.getElementById('f-title').value    = '';
+  document.getElementById('f-desc').value     = '';
+  document.getElementById('f-assignee').value = '';
+  document.getElementById('f-tag').value      = '';
+  buildColorPicker(selectedColor);
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('f-title').focus();
+}
+
+function editCard(cardId) {
+  const card = cards.find(c => c.id === cardId);
+  if (!card) return;
+  editingCardId   = cardId;
+  selectedColor   = card.color;
+  document.getElementById('modal-title').textContent = 'Editar ticket';
+  document.getElementById('f-title').value    = card.title;
+  document.getElementById('f-desc').value     = card.desc || '';
+  document.getElementById('f-assignee').value = card.assignee || '';
+  document.getElementById('f-tag').value      = card.tag || '';
+  buildColorPicker(selectedColor);
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('f-title').focus();
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function saveCard() {
+  const title    = document.getElementById('f-title').value.trim();
+  if (!title) { document.getElementById('f-title').focus(); return; }
+  const desc     = document.getElementById('f-desc').value.trim();
+  const assignee = document.getElementById('f-assignee').value.trim();
+  const tag      = document.getElementById('f-tag').value.trim();
+
+  if (editingCardId) {
+    const card = cards.find(c => c.id === editingCardId);
+    Object.assign(card, { title, desc, assignee, tag, color: selectedColor });
+  } else {
+    const colId = columns[0].id; // Siempre se crea en 'Por hacer'
+    cards.push({ id: uid(), colId, title, desc, assignee, tag, color: selectedColor });
+  }
+  closeModal();
+  render();
+}
+
+function deleteCard(cardId) {
+  if (!confirm('¿Eliminar este ticket?')) return;
+  cards = cards.filter(c => c.id !== cardId);
+  render();
+}
+
+// ── Add Column ────────────────────────────────────────────
+function addColumn() {
+  const title = prompt('Nombre de la nueva columna:');
+  if (!title || !title.trim()) return;
+  const dot = COL_DOTS[columns.length % COL_DOTS.length];
+  columns.push({ id: uid(), title: title.trim(), dot });
+  render();
+}
+
+// ── Descargar plantilla Excel ─────────────────────────────
+function downloadTemplate() {
+  if (typeof XLSX === 'undefined') {
+    alert('La librería SheetJS no está disponible. Verifica tu conexión a internet.');
+    return;
+  }
+
+  // Encabezados
+  const headers = ['titulo', 'descripcion', 'responsable', 'etiqueta', 'columna', 'color'];
+
+  const sampleAssignees = ['Juan Pérez', 'María Gómez', '', 'Carlos Ruiz'];
+
+  // Una fila de ejemplo por cada columna del tablero actual
+  const exampleRows = columns.map((col, i) => {
+    const colorNames = COLORS.map(c => c.name);
+    return [
+      'Ticket de ejemplo ' + (i + 1),
+      'Descripción opcional del ticket',
+      sampleAssignees[i % sampleAssignees.length],
+      'Etiqueta',
+      col.title,
+      colorNames[i % colorNames.length],
+    ];
+  });
+
+  // Construir hoja
+  const wsData = [headers, ...exampleRows];
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+  // Ancho de columnas
+  ws['!cols'] = [
+    { wch: 32 }, // titulo
+    { wch: 40 }, // descripcion
+    { wch: 22 }, // responsable
+    { wch: 18 }, // etiqueta
+    { wch: 20 }, // columna
+    { wch: 12 }, // color
+  ];
+
+  // Pestaña con referencia de colores válidos
+  const refData = [
+    ['Colores válidos', 'Columnas del tablero actual'],
+    ...Math.max(COLORS.length, columns.length) > 0
+      ? Array.from({ length: Math.max(COLORS.length, columns.length) }, (_, i) => [
+          COLORS[i] ? COLORS[i].name : '',
+          columns[i] ? columns[i].title : '',
+        ])
+      : [],
+  ];
+  const wsRef = XLSX.utils.aoa_to_sheet(refData);
+  wsRef['!cols'] = [{ wch: 18 }, { wch: 24 }];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Tickets');
+  XLSX.utils.book_append_sheet(wb, wsRef, 'Referencia');
+
+  XLSX.writeFile(wb, 'plantilla_kanban_nd_sales.xlsx');
+}
+
+// ── Import Excel ──────────────────────────────────────────
+function openImportModal() {
+  pendingImport = [];
+  document.getElementById('import-preview-wrap').style.display = 'none';
+  document.getElementById('btn-do-import').disabled = true;
+  document.getElementById('file-input').value = '';
+  document.getElementById('import-modal').classList.add('open');
+}
+
+function closeImportModal() {
+  document.getElementById('import-modal').classList.remove('open');
+}
+
+// Drag & drop sobre drop-zone
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-active'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-active'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-active');
+  const file = e.dataTransfer.files[0];
+  if (file) processImportFile(file);
+});
+
+document.getElementById('file-input').addEventListener('change', function() {
+  if (this.files[0]) processImportFile(this.files[0]);
+});
+
+function processImportFile(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      let rows = [];
+      const name = file.name.toLowerCase();
+
+      if (name.endsWith('.csv')) {
+        // CSV simple
+        const text = new TextDecoder('utf-8').decode(e.target.result);
+        rows = csvToRows(text);
+      } else {
+        // Excel via SheetJS
+        if (typeof XLSX === 'undefined') {
+          alert('La librería SheetJS no está disponible. Verifica tu conexión a internet.');
+          return;
+        }
+        const wb = XLSX.read(e.target.result, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      }
+
+      parseImportRows(rows);
+    } catch(err) {
+      alert('Error al procesar el archivo: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function csvToRows(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+  return lines.slice(1).map(line => {
+    const vals = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = vals[i] || '');
+    return obj;
+  });
+}
+
+function normalizeHeader(key) {
+  // Mapeo flexible de nombres de columna
+  const map = {
+    titulo: ['titulo','título','title','nombre','name','task','tarea'],
+    descripcion: ['descripcion','descripción','description','desc','detalle','detalhes'],
+    responsable: ['responsable','responsable a cargo','asignado','asignado a','assignee','assigned','assigned to','owner','encargado','dueño','miembro','member'],
+    etiqueta: ['etiqueta','tag','label','tipo','type','categoria','categoría','category'],
+    columna: ['columna','column','estado','status','stage','fase','phase'],
+    color: ['color','colour'],
+  };
+  const k = key.toLowerCase().trim();
+  for (const [norm, aliases] of Object.entries(map)) {
+    if (aliases.includes(k)) return norm;
+  }
+  return k;
+}
+
+function parseImportRows(rows) {
+  if (!rows || rows.length === 0) {
+    alert('No se encontraron filas en el archivo.');
+    return;
+  }
+
+  pendingImport = rows.map(row => {
+    // Normalizar claves
+    const normalized = {};
+    for (const [k, v] of Object.entries(row)) {
+      normalized[normalizeHeader(k)] = String(v).trim();
+    }
+    return {
+      title:    normalized.titulo || '',
+      desc:     normalized.descripcion || '',
+      assignee: normalized.responsable || '',
+      tag:      normalized.etiqueta || '',
+      colName:  normalized.columna || '',
+      color:    normalized.color || COLORS[0].value,
+    };
+  }).filter(r => r.title);
+
+  if (pendingImport.length === 0) {
+    alert('No se encontraron tickets con título válido.');
+    return;
+  }
+
+  // Previsualización
+  const wrap  = document.getElementById('import-preview-wrap');
+  const table = document.getElementById('import-preview-table');
+  const count = document.getElementById('import-count');
+
+  table.innerHTML = `
+    <table>
+      <thead><tr><th>Título</th><th>Responsable</th><th>Descripción</th><th>Etiqueta</th><th>Columna</th></tr></thead>
+      <tbody>
+        ${pendingImport.slice(0, 50).map(r => `
+          <tr>
+            <td>${esc(r.title)}</td>
+            <td>${r.assignee ? esc(r.assignee) : '<em style="color:#506165">Sin asignar</em>'}</td>
+            <td>${esc(r.desc)}</td>
+            <td>${esc(r.tag)}</td>
+            <td>${esc(r.colName) || '<em style="color:#506165">primera</em>'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+  count.textContent = pendingImport.length > 50
+    ? `Mostrando 50 de ${pendingImport.length} tickets. Se importarán todos.`
+    : `${pendingImport.length} ticket(s) listos para importar.`;
+
+  wrap.style.display = 'block';
+  document.getElementById('btn-do-import').disabled = false;
+}
+
+function doImport() {
+  if (!pendingImport.length) return;
+
+  // Mapa de nombres de columna (case-insensitive) → id
+  const colMap = {};
+  columns.forEach(c => { colMap[c.title.toLowerCase()] = c.id; });
+  const defaultColId = columns[0].id;
+
+  let imported = 0;
+  pendingImport.forEach(r => {
+    const colId = r.colName
+      ? (colMap[r.colName.toLowerCase()] || defaultColId)
+      : defaultColId;
+
+    // Resolver color: si es nombre, mapear; si es hex válido, usar; con alias
+    let color = COLORS[0].value;
+    if (r.color) {
+      const cLower = r.color.toLowerCase();
+      const aliasMap = {
+        'azul': '#479BA1',
+        'rojo': '#852C00',
+        'amarillo': '#FF884C',
+        'gris': '#506165',
+        'verde': '#2C6A72',
+        'ámbar': '#FF884C',
+        'ambar': '#FF884C',
+        'violeta': '#AC3900',
+        'rosa': '#852C00',
+      };
+      const byName = COLORS.find(c => c.name.toLowerCase() === cLower);
+      if (byName) {
+        color = byName.value;
+      } else if (aliasMap[cLower]) {
+        color = aliasMap[cLower];
+      } else if (/^#[0-9a-fA-F]{3,6}$/.test(r.color)) {
+        color = r.color;
+      }
+    }
+
+    cards.push({ id: uid(), colId, title: r.title, desc: r.desc, assignee: r.assignee || '', tag: r.tag, color });
+    imported++;
+  });
+
+  closeImportModal();
+  render();
+  setTimeout(() => alert(`✅ Se importaron ${imported} ticket(s) correctamente.`), 100);
+}
+
+// ── Vista ticket ──────────────────────────────────────────
+function openViewModal(cardId) {
+  const card = cards.find(c => c.id === cardId);
+  if (!card) return;
+  const col  = columns.find(c => c.id === card.colId);
+
+  document.getElementById('cvm-top').style.background   = card.color;
+  document.getElementById('cvm-title').textContent      = card.title;
+  document.getElementById('cvm-desc').textContent       = card.desc || '';
+  document.getElementById('cvm-col-dot').style.background = col ? col.dot : '#6b7280';
+  document.getElementById('cvm-col-name').textContent   = col ? col.title : '';
+
+  const tagEl = document.getElementById('cvm-tag');
+  if (card.tag) {
+    tagEl.innerHTML = `<span class="cvm-tag" style="background:${card.color}22;color:${card.color}">${esc(card.tag)}</span>`;
+  } else {
+    tagEl.innerHTML = '';
+  }
+
+  const assigneeEl = document.getElementById('cvm-assignee');
+  if (card.assignee) {
+    assigneeEl.innerHTML = `<span class="cvm-assignee">👤 ${esc(card.assignee)}</span>`;
+  } else {
+    assigneeEl.innerHTML = `<span class="cvm-assignee" style="opacity:.6">👤 Sin asignar</span>`;
+  }
+
+  document.getElementById('cvm-edit-btn').onclick = () => {
+    closeViewModal();
+    editCard(cardId);
+  };
+
+  document.getElementById('view-modal').classList.add('open');
+}
+
+function closeViewModal() {
+  document.getElementById('view-modal').classList.remove('open');
+}
+
+// ── Close modals on overlay click ────────────────────────
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('import-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeImportModal();
+});
+document.getElementById('view-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeViewModal();
+});
+document.getElementById('assign-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeAssignModal();
+});
+
+// Enter en el input de asignar responsable
+document.getElementById('f-assign-name').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    confirmAssignAndMove();
+  }
+});
+
+// ── Keyboard close ────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeImportModal(); closeViewModal(); closeAssignModal(); }
+});
+
+// ── Helpers ───────────────────────────────────────────────
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Reigualar columnas al redimensionar ventana ───────────
+window.addEventListener('resize', equalizeColumnHeights);
+
+// ── Hamburger menu ────────────────────────────────────────
+function toggleMenu() {
+  const dd  = document.getElementById('dropdown');
+  const btn = document.getElementById('btn-menu');
+  const open = dd.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open);
+}
+
+function closeMenu() {
+  document.getElementById('dropdown').classList.remove('open');
+  document.getElementById('btn-menu').classList.remove('open');
+  document.getElementById('btn-menu').setAttribute('aria-expanded', 'false');
+}
+
+// Cerrar al hacer click fuera del menú
+document.addEventListener('click', e => {
+  const wrap = document.querySelector('.menu-wrap');
+  if (wrap && !wrap.contains(e.target)) closeMenu();
+});
+
+// ── Theme toggle (Light / Dark / Noon) ───────────────────
+const THEME_KEY = 'kanban_theme';
+const THEMES = ['light', 'dark', 'noon'];
+const THEME_CONFIG = {
+  light: {
+    label: 'Claro',
+    next: 'dark',
+    icon: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="7.05" y2="7.05"/><line x1="16.95" y1="16.95" x2="19.07" y2="19.07"/><line x1="4.93" y1="19.07" x2="7.05" y2="16.95"/><line x1="16.95" y1="7.05" x2="19.07" y2="4.93"/></svg>`
+  },
+  dark: {
+    label: 'Oscuro',
+    next: 'noon',
+    icon: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`
+  },
+  noon: {
+    label: 'Noon',
+    next: 'light',
+    icon: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`
+  }
+};
+
+function applyTheme(theme, rerender) {
+  if (!THEMES.includes(theme)) theme = 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  const cfg = THEME_CONFIG[theme];
+  document.getElementById('theme-icon').innerHTML    = cfg.icon;
+  document.getElementById('theme-label').textContent = cfg.label;
+  localStorage.setItem(THEME_KEY, theme);
+  if (rerender) render();
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = THEME_CONFIG[current]?.next || 'dark';
+  applyTheme(next, true);
+}
+
+// ── Init ──────────────────────────────────────────────────
+applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+render();
+</script>
+</body>
+</html>
