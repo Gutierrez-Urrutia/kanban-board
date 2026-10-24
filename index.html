@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es" data-theme="dark"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kanban Board Proyecto ND SALES V2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -861,23 +859,23 @@
   <h1>Kanban Board <span>Proyecto ND SALES V2</span></h1>
   <div class="header-actions">
     <button class="btn-theme" id="btn-theme" onclick="toggleTheme()" title="Cambiar tema">
-      <span id="theme-icon"></span>
-      <span class="theme-label" id="theme-label">Claro</span>
+      <span id="theme-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span>
+      <span class="theme-label" id="theme-label">Oscuro</span>
     </button>
     <button class="btn-new" onclick="openModal()">＋ Nuevo ticket</button>
     <div class="menu-wrap">
-      <button class="btn-menu" id="btn-menu" onclick="toggleMenu()" title="Más opciones" aria-expanded="false">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6"  x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <button class="btn-menu open" id="btn-menu" onclick="toggleMenu()" title="Más opciones" aria-expanded="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
-      <div class="dropdown" id="dropdown">
+      <div class="dropdown open" id="dropdown">
 
         <div class="dd-section-label">Columnas</div>
         <button class="dd-item" onclick="addColumn();closeMenu()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           Agregar columna
         </button>
         <button class="dd-item" onclick="equalizeColumnWidths();closeMenu()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           Igualar ancho de columnas
         </button>
 
@@ -888,21 +886,21 @@
           <div class="global-layout" id="global-layout">
             <button class="col-layout-btn" id="glb-1" title="1 por fila" onclick="setGlobalPerRow(1)">▪</button>
             <button class="col-layout-btn" id="glb-2" title="2 por fila" onclick="setGlobalPerRow(2)">▪▪</button>
-            <button class="col-layout-btn" id="glb-3" title="3 por fila" onclick="setGlobalPerRow(3)">▪▪▪</button>
+            <button class="col-layout-btn active" id="glb-3" title="3 por fila" onclick="setGlobalPerRow(3)">▪▪▪</button>
           </div>
         </div>
 
         <div class="dd-sep"></div>
         <div class="dd-section-label">Importar</div>
         <button class="dd-item" onclick="openImportModal();closeMenu()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           Importar desde Excel
         </button>
 
         <div class="dd-sep"></div>
         <div class="dd-section-label">Archivo</div>
         <button class="dd-item" onclick="saveToFile();closeMenu()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
           Guardar en archivo
         </button>
 
@@ -913,7 +911,997 @@
 
 <div id="board">
   <!-- Columns rendered by JS -->
-</div>
+<div class="column" data-col-id="i5q8uvwe" style="width: 280px; min-width: 280px; min-height: 1395px;">
+      <div class="col-header">
+        <div class="col-title-wrap">
+          <span class="col-dot" style="background:#506165"></span>
+          <span class="col-title">Por hacer</span>
+          <span class="col-count">44</span>
+        </div>
+        <button class="col-add" title="Agregar ticket en Por hacer" onclick="openModal()">＋</button>
+      </div>
+      <div class="cards" data-col="i5q8uvwe" data-per-row="3" id="cards-i5q8uvwe" style="--card-w: calc((100% - 16px) / 3);"><div class="card" draggable="true" data-card-id="weamvuxd" style="border-top-color: rgb(80, 97, 101); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Cargar propuestas BPO históricas reales</div>
+    <div class="card-desc">E3 · RF-VTA-01 · Bloqueado: insumo del cliente (plazo 23-10).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#50616522;color:#506165">Datos</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('weamvuxd')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('weamvuxd')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="dpuny0kh" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Probar con cuentas productivas del cliente</div>
+    <div class="card-desc">E6 · RF-VTA-04 · No se probaron las cuentas productivas.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('dpuny0kh')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('dpuny0kh')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ita92h9p" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Estado Firmada con documento adjunto</div>
+    <div class="card-desc">E5 · RF-VTA-06/HU-06 · 0/6 casos; solo marcar Firmada con documento.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ita92h9p')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ita92h9p')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="m9stf16q" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Historial de versiones con fecha y autor</div>
+    <div class="card-desc">E5 · RF-VTA-11/HU-11 · 0/5 casos.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('m9stf16q')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('m9stf16q')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="6ewg184k" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">CRUD de servicios con desactivación</div>
+    <div class="card-desc">E1 · RF-VTA-02 · CP-006, 007, 009 y 102.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('6ewg184k')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('6ewg184k')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="npz7c75k" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pantalla de administración del catálogo</div>
+    <div class="card-desc">E1 · RF-VTA-02 · Búsqueda y filtro activos/inactivos (CP-105).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('npz7c75k')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('npz7c75k')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="2701lfyj" style="border-top-color: rgb(80, 97, 101); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Carga inicial del catálogo de NoonDalton</div>
+    <div class="card-desc">E1 · RF-VTA-02 · Bloqueado: insumo del cliente (plazo 23-10).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#50616522;color:#506165">Datos</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('2701lfyj')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('2701lfyj')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="zx7vff2e" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Selector de servicios con precarga y ajuste</div>
+    <div class="card-desc">E1 · RF-VTA-02 · CP-008 y CP-106: precarga, ajuste y total.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('zx7vff2e')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('zx7vff2e')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="cnogvrnq" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Cálculo de totales</div>
+    <div class="card-desc">E1 · RF-VTA-02 · Total = cantidad por precio; sin mezclar monedas (CP-104).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('cnogvrnq')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('cnogvrnq')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="tlrniz0e" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Precios editables solo por manager y admin</div>
+    <div class="card-desc">E1 · RF-VTA-02 · CP-010: el rol user recibe 403.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('tlrniz0e')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('tlrniz0e')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="2uzuzurr" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Snapshot de precios al emitir la propuesta</div>
+    <div class="card-desc">E1 · RF-VTA-02 · CP-011: la propuesta emitida conserva su precio.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('2uzuzurr')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('2uzuzurr')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="so4ppbrb" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Formulario de cliente actualizado</div>
+    <div class="card-desc">E2 · RF-VTA-03 · CP-012; un cliente antiguo sin datos no debe fallar (CP-015).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('so4ppbrb')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('so4ppbrb')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="8zy439aw" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">customer_id en propuesta y selector en paso 1</div>
+    <div class="card-desc">E2 · RF-VTA-03 · CP-013: propuesta vinculada al cliente.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('8zy439aw')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('8zy439aw')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="eqyh9gs4" style="border-top-color: rgb(80, 97, 101); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Migración de propuestas existentes</div>
+    <div class="card-desc">E2 · RF-VTA-03 · CP-015: regresión con clientes previos al cambio.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#50616522;color:#506165">Datos</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('eqyh9gs4')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('eqyh9gs4')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ko7j3h5q" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Historial de propuestas por cliente</div>
+    <div class="card-desc">E2 · RF-VTA-03 · CP-013, 110 y 111 (orden y aislamiento).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ko7j3h5q')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ko7j3h5q')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ectol23p" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Perfil del cliente en el prompt de generación</div>
+    <div class="card-desc">E2 · RF-VTA-03 · CP-014: el borrador usa industria y tamaño.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ectol23p')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ectol23p')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="8zakg6t7" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">CRUD de plantillas y autocompletar variables</div>
+    <div class="card-desc">E4 · RF-VTA-07/HU-07 · CP-030, 031, 032 y 129.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('8zakg6t7')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('8zakg6t7')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="pm0rd9h5" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Clasificar y filtrar por servicio o industria</div>
+    <div class="card-desc">E4 · RF-VTA-07 · CP-033.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('pm0rd9h5')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('pm0rd9h5')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="4g608eo1" style="border-top-color: rgb(80, 97, 101); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Condiciones comerciales con texto oficial</div>
+    <div class="card-desc">E4 · RF-VTA-07/RNF-VTA-04 · Requiere el texto oficial de NoonDalton (CP-034).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#50616522;color:#506165">Datos</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('4g608eo1')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('4g608eo1')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="niafht68" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Agregaciones por estado y monto, y dashboard</div>
+    <div class="card-desc">E7 · RF-VTA-10/HU-10 · CP-041 y CP-139; usa los estados unificados de RF-VTA-05.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('niafht68')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('niafht68')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="90zx11l5" style="border-top-color: rgb(80, 97, 101); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Fórmulas de KPI acordadas con negocio</div>
+    <div class="card-desc">E7 · RF-VTA-10 · Definir conversión, win rate y valor total.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#50616522;color:#506165">Datos</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('90zx11l5')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('90zx11l5')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="umnvqvek" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Win rate y conversión</div>
+    <div class="card-desc">E7 · RF-VTA-10 · CP-041 y CP-044 (caso sin datos).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('umnvqvek')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('umnvqvek')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="625itvb7" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Tiempo promedio de cierre</div>
+    <div class="card-desc">E7 · RF-VTA-10 · CP-042 y CP-138: las abiertas no cuentan.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('625itvb7')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('625itvb7')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="3d6p2tsi" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Exportar xlsx, csv y pdf con datos de Ventas</div>
+    <div class="card-desc">E7 · RF-VTA-10 · CP-043 y CP-141; el PDF actual exporta libros.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('3d6p2tsi')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('3d6p2tsi')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="0wu1i1m4" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Consulta de clientes, propuestas y catálogo</div>
+    <div class="card-desc">E8 · RF-VTA-09 · CP-038 y CP-136; solo lectura (CP-039).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('0wu1i1m4')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('0wu1i1m4')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="n7fcu8kg" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Filtrado por usuario en toda consulta</div>
+    <div class="card-desc">E8 · RF-VTA-09 · CP-040 y CP-133: sin datos de otros usuarios.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('n7fcu8kg')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('n7fcu8kg')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="36i0nwh8" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pruebas con datos reales y aislamiento</div>
+    <div class="card-desc">E8 · RF-VTA-09 · CP-132, 134 y 135.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('36i0nwh8')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('36i0nwh8')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="7kjr675x" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pruebas con fuentes reales y ajuste de umbral</div>
+    <div class="card-desc">E10 · RF-VTA-14 · CP-058 bloqueado: el cliente no entrega las páginas.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('7kjr675x')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('7kjr675x')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="rlrytyzc" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Conectar Agente 3 a los leads del pipeline</div>
+    <div class="card-desc">E10 · RF-VTA-16/HU-17 · 0/9 casos; personalizar con cargo y empresa.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('rlrytyzc')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('rlrytyzc')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="mlt5i469" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Cola de revisión: aprobar, rechazar, regenerar</div>
+    <div class="card-desc">E10 · RF-VTA-16 · Revisión humana obligatoria.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('mlt5i469')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('mlt5i469')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="v3aqossj" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Marcar como enviado o exportar</div>
+    <div class="card-desc">E10 · RF-VTA-16 · El envío real queda fuera de esta etapa.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('v3aqossj')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('v3aqossj')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ctibkjrg" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Historial de decisiones de la cola</div>
+    <div class="card-desc">E10 · RF-VTA-16 · Registro de decisiones sobre cada correo.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ctibkjrg')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ctibkjrg')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="cmlz23tu" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Inventariar y auditar endpoints</div>
+    <div class="card-desc">E11 · RNF-VTA-01/HU-13 · 0/8 casos de control de acceso.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('cmlz23tu')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('cmlz23tu')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="upk4s6z4" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Aplicar la autenticación que falte</div>
+    <div class="card-desc">E11 · RNF-VTA-01 · Aplica a todos los routers.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('upk4s6z4')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('upk4s6z4')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="qz5z1677" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Filtros de propiedad: cada usuario ve lo suyo</div>
+    <div class="card-desc">E11 · RNF-VTA-01 · Acceso solo a datos propios.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('qz5z1677')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('qz5z1677')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="jt89lwyj" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Matriz de permisos y guardias por rol</div>
+    <div class="card-desc">E11 · RNF-VTA-01 · admin/manager/user; 'descuentos' no tiene RF definido.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('jt89lwyj')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('jt89lwyj')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="kxd6dfld" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Modelo y registro de auditoría</div>
+    <div class="card-desc">E11 · RNF-VTA-02/HU-14 · Usuario, acción, fecha e IP; 0/6 casos.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('kxd6dfld')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('kxd6dfld')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="uogpnmt4" style="border-top-color: rgb(172, 57, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Consulta del registro de auditoría (admin)</div>
+    <div class="card-desc">E11 · RNF-VTA-02 · Ya existe middleware/audit.py (parcial).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#AC390022;color:#AC3900">Seguridad</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('uogpnmt4')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('uogpnmt4')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="1su2x318" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pruebas automáticas de permisos y aislamiento</div>
+    <div class="card-desc">E11 · RNF-VTA-01/02 · Automatizar con Pytest.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('1su2x318')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('1su2x318')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ch60geah" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Endpoint y UI de estado de tareas</div>
+    <div class="card-desc">E12 · RNF-VTA-06/HU-18 · 0/10 casos; routers/tasks.py ya existe.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ch60geah')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ch60geah')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="vietjl3f" style="border-top-color: rgb(44, 106, 114); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Modo fallback si falla la cola</div>
+    <div class="card-desc">E12 · RNF-VTA-06 · Cubierto en RF-VTA-01 (PA-19); falta prueba propia.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#2C6A7222;color:#2C6A72">Integración</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('vietjl3f')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('vietjl3f')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="svs429ef" style="border-top-color: rgb(44, 106, 114); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Errores de IA y CRM uniformes en la UI</div>
+    <div class="card-desc">E12 · RNF-VTA-05/HU-18 · El CRM ya muestra errores (RF-VTA-04).</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#2C6A7222;color:#2C6A72">Integración</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('svs429ef')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('svs429ef')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ksx12og3" style="border-top-color: rgb(133, 44, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Manual de despliegue validado en entorno limpio</div>
+    <div class="card-desc">E12 · RNF-VTA-05 · Sin asignar; 0/7 casos.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#852C0022;color:#852C00">Entrega</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ksx12og3')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ksx12og3')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="2du3s86o" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pruebas transversales: cobertura, E2E, regresión</div>
+    <div class="card-desc">TRANSV · R-13 · 7 casos sin ejecutar.</div>
+    
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('2du3s86o')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('2du3s86o')">🗑️</button>
+      </div>
+    </div>
+  </div></div>
+      <div class="col-resizer" data-col="i5q8uvwe"></div>
+    </div><div class="column" data-col-id="q0lvmhm1" style="width: 280px; min-width: 280px; min-height: 1395px;">
+      <div class="col-header">
+        <div class="col-title-wrap">
+          <span class="col-dot" style="background:#225258"></span>
+          <span class="col-title">En desarrollo</span>
+          <span class="col-count">7</span>
+        </div>
+        
+      </div>
+      <div class="cards" data-col="q0lvmhm1" data-per-row="3" id="cards-q0lvmhm1" style="--card-w: calc((100% - 16px) / 3);"><div class="card" draggable="true" data-card-id="g5lbvmaw" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Ejecutar pruebas pendientes de RF-VTA-01</div>
+    <div class="card-desc">E3 · RF-VTA-01 · CP-004, CP-100 y CP-101 (límites de carga y E2E real).</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('g5lbvmaw')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('g5lbvmaw')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="3wekqp7o" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Medir tiempos por extensión y fijar meta</div>
+    <div class="card-desc">E3 · RF-VTA-01/RNF-VTA-03 · La meta de 60 s es hipótesis hasta medir.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('3wekqp7o')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('3wekqp7o')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="u46zs87u" style="border-top-color: rgb(133, 44, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Commit, despliegue y aceptación del CRM</div>
+    <div class="card-desc">E6 · RF-VTA-04 · Correcciones sin commit; falta despliegue y aceptación.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Pablo">👤 Pablo</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#852C0022;color:#852C00">Entrega</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('u46zs87u')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('u46zs87u')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="7jqkjes3" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Cerrar defectos RF05-D-001 y RF05-D-002</div>
+    <div class="card-desc">E5 · RF-VTA-05 · Dos defectos menores abiertos.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('7jqkjes3')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('7jqkjes3')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="dv796zin" style="border-top-color: rgb(133, 44, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Acordar transiciones con Alloxentric (D-12)</div>
+    <div class="card-desc">E5 · RF-VTA-05 · Decisión del equipo, pendiente de acordar y registrar.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Pablo">👤 Pablo</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#852C0022;color:#852C00">Entrega</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('dv796zin')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('dv796zin')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="nmgp085d" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Industria y tamaño en el cliente</div>
+    <div class="card-desc">E2 · RF-VTA-03/HU-03 · CP-012 y CP-107; falta definir las listas de valores.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Bárbara">👤 Bárbara</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('nmgp085d')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('nmgp085d')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="gb4wu5y9" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Corregir RF12-D-007 (formato en el editor)</div>
+    <div class="card-desc">E4 · RF-VTA-12 · h2 pegado, h4 y citas pierden formato al guardar.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('gb4wu5y9')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('gb4wu5y9')">🗑️</button>
+      </div>
+    </div>
+  </div></div>
+      <div class="col-resizer" data-col="q0lvmhm1"></div>
+    </div><div class="column" data-col-id="dcjgwvsm" style="width: 280px; min-width: 280px; min-height: 1395px;">
+      <div class="col-header">
+        <div class="col-title-wrap">
+          <span class="col-dot" style="background:#FF5500"></span>
+          <span class="col-title">QA</span>
+          <span class="col-count">1</span>
+        </div>
+        
+      </div>
+      <div class="cards" data-col="dcjgwvsm" data-per-row="3" id="cards-dcjgwvsm" style="--card-w: calc((100% - 16px) / 3);"><div class="card" draggable="true" data-card-id="ldomuur9" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Contexto dinámico en vez de contexto fijo</div>
+    <div class="card-desc">E3 · RF-VTA-01 · PA-10 a PA-12 aprobados. Falta CP-004.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ldomuur9')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ldomuur9')">🗑️</button>
+      </div>
+    </div>
+  </div></div>
+      <div class="col-resizer" data-col="dcjgwvsm"></div>
+    </div><div class="column" data-col-id="vmisxghp" style="width: 280px; min-width: 280px; min-height: 1395px;">
+      <div class="col-header">
+        <div class="col-title-wrap">
+          <span class="col-dot" style="background:#2C6A72"></span>
+          <span class="col-title">Listo</span>
+          <span class="col-count">25</span>
+        </div>
+        
+      </div>
+      <div class="cards" data-col="vmisxghp" data-per-row="3" id="cards-vmisxghp" style="--card-w: calc((100% - 16px) / 3);"><div class="card" draggable="true" data-card-id="j0e2cqdk" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Flujo guiado y mockups (wireframe v3)</div>
+    <div class="card-desc">E3 · RF-VTA-01 · PA-17 aprobado: flujo de 3 pasos operativo.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('j0e2cqdk')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('j0e2cqdk')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="3fvwgmuw" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pantallas de los 3 pasos con validaciones</div>
+    <div class="card-desc">E3 · RF-VTA-01 · PA-17 y PA-21 aprobados en la app real.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('3fvwgmuw')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('3fvwgmuw')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="e2gvlv6i" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Prompt y servicio de generación</div>
+    <div class="card-desc">E3 · RF-VTA-01 · PA-13 a PA-16 aprobados; no copia datos de otros clientes.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('e2gvlv6i')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('e2gvlv6i')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="6jflm7oq" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pantalla de revisión y edición del borrador</div>
+    <div class="card-desc">E3 · RF-VTA-01 · PA-22 aprobado: edita, guarda y reabre sin duplicar.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('6jflm7oq')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('6jflm7oq')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="87s1rhm6" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Manejo de errores del proveedor de IA</div>
+    <div class="card-desc">E3 · RF-VTA-01 · PA-20 aprobado: tarea fallida y propuesta en error.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('87s1rhm6')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('87s1rhm6')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="z8lw1c8g" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Generación asíncrona con avance y aviso</div>
+    <div class="card-desc">E3 · RF-VTA-01 · PA-18 a PA-21 aprobados; fallback si cae la cola.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('z8lw1c8g')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('z8lw1c8g')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="8miyblvq" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Flujos: casos de éxito, comparativas, objeciones</div>
+    <div class="card-desc">E9 · RF-VTA-08/HU-08 · 36/36 casos aprobados.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('8miyblvq')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('8miyblvq')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="y75xqlmr" style="border-top-color: rgb(80, 97, 101); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Fuente de datos: propuestas y casos cargados</div>
+    <div class="card-desc">E9 · RF-VTA-08 · Usa solo documentos del propio usuario (CP-25).</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#50616522;color:#506165">Datos</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('y75xqlmr')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('y75xqlmr')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="lbot3pw5" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Guardrails: citar fuente o avisar falta de datos</div>
+    <div class="card-desc">E9 · RF-VTA-08 · Sin datos inventados; 422 si no hay información.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('lbot3pw5')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('lbot3pw5')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ptm4z5w4" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pruebas con datos ausentes</div>
+    <div class="card-desc">E9 · RF-VTA-08 · Aprobadas; 7 defectos corregidos.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Jorge">👤 Jorge</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ptm4z5w4')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ptm4z5w4')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="vaoth44i" style="border-top-color: rgb(44, 106, 114); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Mapeo de campos propuesta/cliente a CRM</div>
+    <div class="card-desc">E6 · RF-VTA-04/HU-04 · CP-016 y CP-017 aprobados (HubSpot y Salesforce).</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Pablo">👤 Pablo</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#2C6A7222;color:#2C6A72">Integración</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('vaoth44i')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('vaoth44i')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="qip21m82" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Pruebas en HubSpot y Salesforce de desarrollo</div>
+    <div class="card-desc">E6 · RF-VTA-04 · Probado con cuentas dev reales el 22-10.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Pablo">👤 Pablo</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('qip21m82')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('qip21m82')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="jvp93m69" style="border-top-color: rgb(44, 106, 114); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">ID externo y upsert idempotente</div>
+    <div class="card-desc">E6 · RF-VTA-04 · CP-018 y CP-115 aprobados: el reenvío no duplica.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Pablo">👤 Pablo</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#2C6A7222;color:#2C6A72">Integración</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('jvp93m69')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('jvp93m69')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="z2870n36" style="border-top-color: rgb(44, 106, 114); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Errores de sincronización visibles y reintento</div>
+    <div class="card-desc">E6 · RF-VTA-04 · CP-019 y CP-114 aprobados; el error queda en crmSync.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Pablo">👤 Pablo</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#2C6A7222;color:#2C6A72">Integración</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('z2870n36')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('z2870n36')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="qqr0bh9e" style="border-top-color: rgb(44, 106, 114); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Timeouts y caídas del CRM</div>
+    <div class="card-desc">E6 · RF-VTA-04 · CP-112 y CP-113 aprobados.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Pablo">👤 Pablo</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#2C6A7222;color:#2C6A72">Integración</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('qqr0bh9e')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('qqr0bh9e')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="hivvxfhg" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Máquina de estados y matriz de transiciones</div>
+    <div class="card-desc">E5 · RF-VTA-05/HU-05 · CP-022 y CP-118 aprobados (8 transiciones válidas).</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('hivvxfhg')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('hivvxfhg')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="rb5lbieh" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Lista única de 6 estados (backend y frontend)</div>
+    <div class="card-desc">E5 · RF-VTA-05 · CP-021 y CP-121 aprobados.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('rb5lbieh')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('rb5lbieh')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="11pib2pr" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Validar transiciones y marcar 'Vista' a mano</div>
+    <div class="card-desc">E5 · RF-VTA-05 · CP-023 y CP-027 aprobados; inválidas responden 409.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('11pib2pr')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('11pib2pr')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="2mqwwwfa" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Score de propuesta separado del de oportunidad</div>
+    <div class="card-desc">E5 · RF-VTA-05 · CP-026 aprobado: el estado ya no cambia el score.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('2mqwwwfa')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('2mqwwwfa')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="4lqdim24" style="border-top-color: rgb(80, 97, 101); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Migrar propuestas existentes (equivalencias D-01)</div>
+    <div class="card-desc">E5 · RF-VTA-05 · Marcado como terminado por el equipo; sin evidencia en la matriz.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#50616522;color:#506165">Datos</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('4lqdim24')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('4lqdim24')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="s7kmc68n" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Modelo de datos del servicio</div>
+    <div class="card-desc">E1 · RF-VTA-02/HU-02 · Hoy solo hay líneas de precio en schemas/proposal.py.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Bárbara">👤 Bárbara</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('s7kmc68n')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('s7kmc68n')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="1ezqyssd" style="border-top-color: rgb(71, 155, 161); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Logo y colores corporativos en la exportación</div>
+    <div class="card-desc">E4 · RF-VTA-12/HU-12 · CP-049 aprobado.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#479BA122;color:#479BA1">Frontend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('1ezqyssd')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('1ezqyssd')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="cu445dfp" style="border-top-color: rgb(255, 136, 76); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Regresión de exportación PDF y DOCX</div>
+    <div class="card-desc">E4 · RF-VTA-12 · 10/10 aprobados tras corregir 5 defectos.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF884C22;color:#FF884C">Pruebas</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('cu445dfp')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('cu445dfp')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="ufg0mvor" style="border-top-color: rgb(34, 82, 88); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Configurar y ejecutar el pipeline (RF-VTA-13)</div>
+    <div class="card-desc">E10 · RF-VTA-13/HU-15 · 9/9 aprobados, sin defectos abiertos.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#22525822;color:#225258">Backend</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('ufg0mvor')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('ufg0mvor')">🗑️</button>
+      </div>
+    </div>
+  </div><div class="card" draggable="true" data-card-id="7u6votvd" style="border-top-color: rgb(255, 85, 0); background: var(--card-bg); width: calc(33.3333% - 5.33333px);">
+    <div class="card-title">Detección y calificación de vacantes (RF-VTA-14)</div>
+    <div class="card-desc">E10 · RF-VTA-14/HU-16 · 12/13 aprobados; CP-058 depende de fuentes reales.</div>
+    
+      <div class="card-assignee-wrap">
+        <span class="card-assignee" title="Responsable: Hernán">👤 Hernán</span>
+      </div>
+    <div class="card-footer">
+      <span class="card-tag" style="background:#FF550022;color:#FF5500">IA</span>
+      <div class="card-actions">
+        <button class="card-btn" title="Editar" onclick="editCard('7u6votvd')">✏️</button>
+        <button class="card-btn" title="Eliminar" onclick="deleteCard('7u6votvd')">🗑️</button>
+      </div>
+    </div>
+  </div></div>
+      <div class="col-resizer" data-col="vmisxghp"></div>
+    </div></div>
 
 <!-- Modal: Vista ticket -->
 <div class="modal-overlay" id="view-modal">
@@ -925,7 +1913,7 @@
         <div id="cvm-assignee"></div>
       </div>
       <div class="cvm-title" id="cvm-title"></div>
-      <div class="cvm-desc"  id="cvm-desc"></div>
+      <div class="cvm-desc" id="cvm-desc"></div>
     </div>
     <div class="cvm-footer">
       <div class="cvm-col-badge">
@@ -1016,7 +2004,7 @@
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeImportModal()">Cancelar</button>
-      <button class="btn-save" id="btn-do-import" onclick="doImport()" disabled>Importar</button>
+      <button class="btn-save" id="btn-do-import" onclick="doImport()" disabled="">Importar</button>
     </div>
   </div>
 </div>
@@ -1026,8 +2014,731 @@
 
 <!-- Datos embebidos: saveToFile() actualiza este bloque al guardar en disco -->
 <script id="initial-data" type="application/json">
-null
-</script>
+{
+  "columns": [
+    {
+      "id": "i5q8uvwe",
+      "title": "Por hacer",
+      "dot": "#506165",
+      "perRow": 3
+    },
+    {
+      "id": "q0lvmhm1",
+      "title": "En desarrollo",
+      "dot": "#225258",
+      "perRow": 3
+    },
+    {
+      "id": "dcjgwvsm",
+      "title": "QA",
+      "dot": "#FF5500",
+      "perRow": 3
+    },
+    {
+      "id": "vmisxghp",
+      "title": "Listo",
+      "dot": "#2C6A72",
+      "perRow": 3
+    }
+  ],
+  "cards": [
+    {
+      "id": "j0e2cqdk",
+      "colId": "vmisxghp",
+      "title": "Flujo guiado y mockups (wireframe v3)",
+      "desc": "E3 · RF-VTA-01 · PA-17 aprobado: flujo de 3 pasos operativo.",
+      "assignee": "Jorge",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "3fvwgmuw",
+      "colId": "vmisxghp",
+      "title": "Pantallas de los 3 pasos con validaciones",
+      "desc": "E3 · RF-VTA-01 · PA-17 y PA-21 aprobados en la app real.",
+      "assignee": "Jorge",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "e2gvlv6i",
+      "colId": "vmisxghp",
+      "title": "Prompt y servicio de generación",
+      "desc": "E3 · RF-VTA-01 · PA-13 a PA-16 aprobados; no copia datos de otros clientes.",
+      "assignee": "Jorge",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "6jflm7oq",
+      "colId": "vmisxghp",
+      "title": "Pantalla de revisión y edición del borrador",
+      "desc": "E3 · RF-VTA-01 · PA-22 aprobado: edita, guarda y reabre sin duplicar.",
+      "assignee": "Jorge",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "87s1rhm6",
+      "colId": "vmisxghp",
+      "title": "Manejo de errores del proveedor de IA",
+      "desc": "E3 · RF-VTA-01 · PA-20 aprobado: tarea fallida y propuesta en error.",
+      "assignee": "Jorge",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "ldomuur9",
+      "colId": "dcjgwvsm",
+      "title": "Contexto dinámico en vez de contexto fijo",
+      "desc": "E3 · RF-VTA-01 · PA-10 a PA-12 aprobados. Falta CP-004.",
+      "assignee": "Jorge",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "z8lw1c8g",
+      "colId": "vmisxghp",
+      "title": "Generación asíncrona con avance y aviso",
+      "desc": "E3 · RF-VTA-01 · PA-18 a PA-21 aprobados; fallback si cae la cola.",
+      "assignee": "Jorge",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "g5lbvmaw",
+      "colId": "q0lvmhm1",
+      "title": "Ejecutar pruebas pendientes de RF-VTA-01",
+      "desc": "E3 · RF-VTA-01 · CP-004, CP-100 y CP-101 (límites de carga y E2E real).",
+      "assignee": "Jorge",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "3wekqp7o",
+      "colId": "q0lvmhm1",
+      "title": "Medir tiempos por extensión y fijar meta",
+      "desc": "E3 · RF-VTA-01/RNF-VTA-03 · La meta de 60 s es hipótesis hasta medir.",
+      "assignee": "Jorge",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "weamvuxd",
+      "colId": "i5q8uvwe",
+      "title": "Cargar propuestas BPO históricas reales",
+      "desc": "E3 · RF-VTA-01 · Bloqueado: insumo del cliente (plazo 23-10).",
+      "assignee": "",
+      "tag": "Datos",
+      "color": "#506165"
+    },
+    {
+      "id": "8miyblvq",
+      "colId": "vmisxghp",
+      "title": "Flujos: casos de éxito, comparativas, objeciones",
+      "desc": "E9 · RF-VTA-08/HU-08 · 36/36 casos aprobados.",
+      "assignee": "Jorge",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "y75xqlmr",
+      "colId": "vmisxghp",
+      "title": "Fuente de datos: propuestas y casos cargados",
+      "desc": "E9 · RF-VTA-08 · Usa solo documentos del propio usuario (CP-25).",
+      "assignee": "Jorge",
+      "tag": "Datos",
+      "color": "#506165"
+    },
+    {
+      "id": "lbot3pw5",
+      "colId": "vmisxghp",
+      "title": "Guardrails: citar fuente o avisar falta de datos",
+      "desc": "E9 · RF-VTA-08 · Sin datos inventados; 422 si no hay información.",
+      "assignee": "Jorge",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "ptm4z5w4",
+      "colId": "vmisxghp",
+      "title": "Pruebas con datos ausentes",
+      "desc": "E9 · RF-VTA-08 · Aprobadas; 7 defectos corregidos.",
+      "assignee": "Jorge",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "vaoth44i",
+      "colId": "vmisxghp",
+      "title": "Mapeo de campos propuesta/cliente a CRM",
+      "desc": "E6 · RF-VTA-04/HU-04 · CP-016 y CP-017 aprobados (HubSpot y Salesforce).",
+      "assignee": "Pablo",
+      "tag": "Integración",
+      "color": "#2C6A72"
+    },
+    {
+      "id": "qip21m82",
+      "colId": "vmisxghp",
+      "title": "Pruebas en HubSpot y Salesforce de desarrollo",
+      "desc": "E6 · RF-VTA-04 · Probado con cuentas dev reales el 22-10.",
+      "assignee": "Pablo",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "jvp93m69",
+      "colId": "vmisxghp",
+      "title": "ID externo y upsert idempotente",
+      "desc": "E6 · RF-VTA-04 · CP-018 y CP-115 aprobados: el reenvío no duplica.",
+      "assignee": "Pablo",
+      "tag": "Integración",
+      "color": "#2C6A72"
+    },
+    {
+      "id": "z2870n36",
+      "colId": "vmisxghp",
+      "title": "Errores de sincronización visibles y reintento",
+      "desc": "E6 · RF-VTA-04 · CP-019 y CP-114 aprobados; el error queda en crmSync.",
+      "assignee": "Pablo",
+      "tag": "Integración",
+      "color": "#2C6A72"
+    },
+    {
+      "id": "qqr0bh9e",
+      "colId": "vmisxghp",
+      "title": "Timeouts y caídas del CRM",
+      "desc": "E6 · RF-VTA-04 · CP-112 y CP-113 aprobados.",
+      "assignee": "Pablo",
+      "tag": "Integración",
+      "color": "#2C6A72"
+    },
+    {
+      "id": "u46zs87u",
+      "colId": "q0lvmhm1",
+      "title": "Commit, despliegue y aceptación del CRM",
+      "desc": "E6 · RF-VTA-04 · Correcciones sin commit; falta despliegue y aceptación.",
+      "assignee": "Pablo",
+      "tag": "Entrega",
+      "color": "#852C00"
+    },
+    {
+      "id": "dpuny0kh",
+      "colId": "i5q8uvwe",
+      "title": "Probar con cuentas productivas del cliente",
+      "desc": "E6 · RF-VTA-04 · No se probaron las cuentas productivas.",
+      "assignee": "",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "hivvxfhg",
+      "colId": "vmisxghp",
+      "title": "Máquina de estados y matriz de transiciones",
+      "desc": "E5 · RF-VTA-05/HU-05 · CP-022 y CP-118 aprobados (8 transiciones válidas).",
+      "assignee": "Hernán",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "rb5lbieh",
+      "colId": "vmisxghp",
+      "title": "Lista única de 6 estados (backend y frontend)",
+      "desc": "E5 · RF-VTA-05 · CP-021 y CP-121 aprobados.",
+      "assignee": "Hernán",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "11pib2pr",
+      "colId": "vmisxghp",
+      "title": "Validar transiciones y marcar 'Vista' a mano",
+      "desc": "E5 · RF-VTA-05 · CP-023 y CP-027 aprobados; inválidas responden 409.",
+      "assignee": "Hernán",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "2mqwwwfa",
+      "colId": "vmisxghp",
+      "title": "Score de propuesta separado del de oportunidad",
+      "desc": "E5 · RF-VTA-05 · CP-026 aprobado: el estado ya no cambia el score.",
+      "assignee": "Hernán",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "4lqdim24",
+      "colId": "vmisxghp",
+      "title": "Migrar propuestas existentes (equivalencias D-01)",
+      "desc": "E5 · RF-VTA-05 · Marcado como terminado por el equipo; sin evidencia en la matriz.",
+      "assignee": "Hernán",
+      "tag": "Datos",
+      "color": "#506165"
+    },
+    {
+      "id": "7jqkjes3",
+      "colId": "q0lvmhm1",
+      "title": "Cerrar defectos RF05-D-001 y RF05-D-002",
+      "desc": "E5 · RF-VTA-05 · Dos defectos menores abiertos.",
+      "assignee": "Hernán",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "dv796zin",
+      "colId": "q0lvmhm1",
+      "title": "Acordar transiciones con Alloxentric (D-12)",
+      "desc": "E5 · RF-VTA-05 · Decisión del equipo, pendiente de acordar y registrar.",
+      "assignee": "Pablo",
+      "tag": "Entrega",
+      "color": "#852C00"
+    },
+    {
+      "id": "ita92h9p",
+      "colId": "i5q8uvwe",
+      "title": "Estado Firmada con documento adjunto",
+      "desc": "E5 · RF-VTA-06/HU-06 · 0/6 casos; solo marcar Firmada con documento.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "m9stf16q",
+      "colId": "i5q8uvwe",
+      "title": "Historial de versiones con fecha y autor",
+      "desc": "E5 · RF-VTA-11/HU-11 · 0/5 casos.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "s7kmc68n",
+      "colId": "vmisxghp",
+      "title": "Modelo de datos del servicio",
+      "desc": "E1 · RF-VTA-02/HU-02 · Hoy solo hay líneas de precio en schemas/proposal.py.",
+      "assignee": "Bárbara",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "6ewg184k",
+      "colId": "i5q8uvwe",
+      "title": "CRUD de servicios con desactivación",
+      "desc": "E1 · RF-VTA-02 · CP-006, 007, 009 y 102.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "npz7c75k",
+      "colId": "i5q8uvwe",
+      "title": "Pantalla de administración del catálogo",
+      "desc": "E1 · RF-VTA-02 · Búsqueda y filtro activos/inactivos (CP-105).",
+      "assignee": "",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "2701lfyj",
+      "colId": "i5q8uvwe",
+      "title": "Carga inicial del catálogo de NoonDalton",
+      "desc": "E1 · RF-VTA-02 · Bloqueado: insumo del cliente (plazo 23-10).",
+      "assignee": "",
+      "tag": "Datos",
+      "color": "#506165"
+    },
+    {
+      "id": "zx7vff2e",
+      "colId": "i5q8uvwe",
+      "title": "Selector de servicios con precarga y ajuste",
+      "desc": "E1 · RF-VTA-02 · CP-008 y CP-106: precarga, ajuste y total.",
+      "assignee": "",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "cnogvrnq",
+      "colId": "i5q8uvwe",
+      "title": "Cálculo de totales",
+      "desc": "E1 · RF-VTA-02 · Total = cantidad por precio; sin mezclar monedas (CP-104).",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "tlrniz0e",
+      "colId": "i5q8uvwe",
+      "title": "Precios editables solo por manager y admin",
+      "desc": "E1 · RF-VTA-02 · CP-010: el rol user recibe 403.",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "2uzuzurr",
+      "colId": "i5q8uvwe",
+      "title": "Snapshot de precios al emitir la propuesta",
+      "desc": "E1 · RF-VTA-02 · CP-011: la propuesta emitida conserva su precio.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "nmgp085d",
+      "colId": "q0lvmhm1",
+      "title": "Industria y tamaño en el cliente",
+      "desc": "E2 · RF-VTA-03/HU-03 · CP-012 y CP-107; falta definir las listas de valores.",
+      "assignee": "Bárbara",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "so4ppbrb",
+      "colId": "i5q8uvwe",
+      "title": "Formulario de cliente actualizado",
+      "desc": "E2 · RF-VTA-03 · CP-012; un cliente antiguo sin datos no debe fallar (CP-015).",
+      "assignee": "",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "8zy439aw",
+      "colId": "i5q8uvwe",
+      "title": "customer_id en propuesta y selector en paso 1",
+      "desc": "E2 · RF-VTA-03 · CP-013: propuesta vinculada al cliente.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "eqyh9gs4",
+      "colId": "i5q8uvwe",
+      "title": "Migración de propuestas existentes",
+      "desc": "E2 · RF-VTA-03 · CP-015: regresión con clientes previos al cambio.",
+      "assignee": "",
+      "tag": "Datos",
+      "color": "#506165"
+    },
+    {
+      "id": "ko7j3h5q",
+      "colId": "i5q8uvwe",
+      "title": "Historial de propuestas por cliente",
+      "desc": "E2 · RF-VTA-03 · CP-013, 110 y 111 (orden y aislamiento).",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "ectol23p",
+      "colId": "i5q8uvwe",
+      "title": "Perfil del cliente en el prompt de generación",
+      "desc": "E2 · RF-VTA-03 · CP-014: el borrador usa industria y tamaño.",
+      "assignee": "",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "8zakg6t7",
+      "colId": "i5q8uvwe",
+      "title": "CRUD de plantillas y autocompletar variables",
+      "desc": "E4 · RF-VTA-07/HU-07 · CP-030, 031, 032 y 129.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "pm0rd9h5",
+      "colId": "i5q8uvwe",
+      "title": "Clasificar y filtrar por servicio o industria",
+      "desc": "E4 · RF-VTA-07 · CP-033.",
+      "assignee": "",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "4g608eo1",
+      "colId": "i5q8uvwe",
+      "title": "Condiciones comerciales con texto oficial",
+      "desc": "E4 · RF-VTA-07/RNF-VTA-04 · Requiere el texto oficial de NoonDalton (CP-034).",
+      "assignee": "",
+      "tag": "Datos",
+      "color": "#506165"
+    },
+    {
+      "id": "1ezqyssd",
+      "colId": "vmisxghp",
+      "title": "Logo y colores corporativos en la exportación",
+      "desc": "E4 · RF-VTA-12/HU-12 · CP-049 aprobado.",
+      "assignee": "Hernán",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "cu445dfp",
+      "colId": "vmisxghp",
+      "title": "Regresión de exportación PDF y DOCX",
+      "desc": "E4 · RF-VTA-12 · 10/10 aprobados tras corregir 5 defectos.",
+      "assignee": "Hernán",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "gb4wu5y9",
+      "colId": "q0lvmhm1",
+      "title": "Corregir RF12-D-007 (formato en el editor)",
+      "desc": "E4 · RF-VTA-12 · h2 pegado, h4 y citas pierden formato al guardar.",
+      "assignee": "Hernán",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "niafht68",
+      "colId": "i5q8uvwe",
+      "title": "Agregaciones por estado y monto, y dashboard",
+      "desc": "E7 · RF-VTA-10/HU-10 · CP-041 y CP-139; usa los estados unificados de RF-VTA-05.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "90zx11l5",
+      "colId": "i5q8uvwe",
+      "title": "Fórmulas de KPI acordadas con negocio",
+      "desc": "E7 · RF-VTA-10 · Definir conversión, win rate y valor total.",
+      "assignee": "",
+      "tag": "Datos",
+      "color": "#506165"
+    },
+    {
+      "id": "umnvqvek",
+      "colId": "i5q8uvwe",
+      "title": "Win rate y conversión",
+      "desc": "E7 · RF-VTA-10 · CP-041 y CP-044 (caso sin datos).",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "625itvb7",
+      "colId": "i5q8uvwe",
+      "title": "Tiempo promedio de cierre",
+      "desc": "E7 · RF-VTA-10 · CP-042 y CP-138: las abiertas no cuentan.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "3d6p2tsi",
+      "colId": "i5q8uvwe",
+      "title": "Exportar xlsx, csv y pdf con datos de Ventas",
+      "desc": "E7 · RF-VTA-10 · CP-043 y CP-141; el PDF actual exporta libros.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "0wu1i1m4",
+      "colId": "i5q8uvwe",
+      "title": "Consulta de clientes, propuestas y catálogo",
+      "desc": "E8 · RF-VTA-09 · CP-038 y CP-136; solo lectura (CP-039).",
+      "assignee": "",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "n7fcu8kg",
+      "colId": "i5q8uvwe",
+      "title": "Filtrado por usuario en toda consulta",
+      "desc": "E8 · RF-VTA-09 · CP-040 y CP-133: sin datos de otros usuarios.",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "36i0nwh8",
+      "colId": "i5q8uvwe",
+      "title": "Pruebas con datos reales y aislamiento",
+      "desc": "E8 · RF-VTA-09 · CP-132, 134 y 135.",
+      "assignee": "",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "ufg0mvor",
+      "colId": "vmisxghp",
+      "title": "Configurar y ejecutar el pipeline (RF-VTA-13)",
+      "desc": "E10 · RF-VTA-13/HU-15 · 9/9 aprobados, sin defectos abiertos.",
+      "assignee": "Hernán",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "7u6votvd",
+      "colId": "vmisxghp",
+      "title": "Detección y calificación de vacantes (RF-VTA-14)",
+      "desc": "E10 · RF-VTA-14/HU-16 · 12/13 aprobados; CP-058 depende de fuentes reales.",
+      "assignee": "Hernán",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "7kjr675x",
+      "colId": "i5q8uvwe",
+      "title": "Pruebas con fuentes reales y ajuste de umbral",
+      "desc": "E10 · RF-VTA-14 · CP-058 bloqueado: el cliente no entrega las páginas.",
+      "assignee": "",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "rlrytyzc",
+      "colId": "i5q8uvwe",
+      "title": "Conectar Agente 3 a los leads del pipeline",
+      "desc": "E10 · RF-VTA-16/HU-17 · 0/9 casos; personalizar con cargo y empresa.",
+      "assignee": "",
+      "tag": "IA",
+      "color": "#FF5500"
+    },
+    {
+      "id": "mlt5i469",
+      "colId": "i5q8uvwe",
+      "title": "Cola de revisión: aprobar, rechazar, regenerar",
+      "desc": "E10 · RF-VTA-16 · Revisión humana obligatoria.",
+      "assignee": "",
+      "tag": "Frontend",
+      "color": "#479BA1"
+    },
+    {
+      "id": "v3aqossj",
+      "colId": "i5q8uvwe",
+      "title": "Marcar como enviado o exportar",
+      "desc": "E10 · RF-VTA-16 · El envío real queda fuera de esta etapa.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "ctibkjrg",
+      "colId": "i5q8uvwe",
+      "title": "Historial de decisiones de la cola",
+      "desc": "E10 · RF-VTA-16 · Registro de decisiones sobre cada correo.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "cmlz23tu",
+      "colId": "i5q8uvwe",
+      "title": "Inventariar y auditar endpoints",
+      "desc": "E11 · RNF-VTA-01/HU-13 · 0/8 casos de control de acceso.",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "upk4s6z4",
+      "colId": "i5q8uvwe",
+      "title": "Aplicar la autenticación que falte",
+      "desc": "E11 · RNF-VTA-01 · Aplica a todos los routers.",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "qz5z1677",
+      "colId": "i5q8uvwe",
+      "title": "Filtros de propiedad: cada usuario ve lo suyo",
+      "desc": "E11 · RNF-VTA-01 · Acceso solo a datos propios.",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "jt89lwyj",
+      "colId": "i5q8uvwe",
+      "title": "Matriz de permisos y guardias por rol",
+      "desc": "E11 · RNF-VTA-01 · admin/manager/user; 'descuentos' no tiene RF definido.",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "kxd6dfld",
+      "colId": "i5q8uvwe",
+      "title": "Modelo y registro de auditoría",
+      "desc": "E11 · RNF-VTA-02/HU-14 · Usuario, acción, fecha e IP; 0/6 casos.",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "uogpnmt4",
+      "colId": "i5q8uvwe",
+      "title": "Consulta del registro de auditoría (admin)",
+      "desc": "E11 · RNF-VTA-02 · Ya existe middleware/audit.py (parcial).",
+      "assignee": "",
+      "tag": "Seguridad",
+      "color": "#AC3900"
+    },
+    {
+      "id": "1su2x318",
+      "colId": "i5q8uvwe",
+      "title": "Pruebas automáticas de permisos y aislamiento",
+      "desc": "E11 · RNF-VTA-01/02 · Automatizar con Pytest.",
+      "assignee": "",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    },
+    {
+      "id": "ch60geah",
+      "colId": "i5q8uvwe",
+      "title": "Endpoint y UI de estado de tareas",
+      "desc": "E12 · RNF-VTA-06/HU-18 · 0/10 casos; routers/tasks.py ya existe.",
+      "assignee": "",
+      "tag": "Backend",
+      "color": "#225258"
+    },
+    {
+      "id": "vietjl3f",
+      "colId": "i5q8uvwe",
+      "title": "Modo fallback si falla la cola",
+      "desc": "E12 · RNF-VTA-06 · Cubierto en RF-VTA-01 (PA-19); falta prueba propia.",
+      "assignee": "",
+      "tag": "Integración",
+      "color": "#2C6A72"
+    },
+    {
+      "id": "svs429ef",
+      "colId": "i5q8uvwe",
+      "title": "Errores de IA y CRM uniformes en la UI",
+      "desc": "E12 · RNF-VTA-05/HU-18 · El CRM ya muestra errores (RF-VTA-04).",
+      "assignee": "",
+      "tag": "Integración",
+      "color": "#2C6A72"
+    },
+    {
+      "id": "ksx12og3",
+      "colId": "i5q8uvwe",
+      "title": "Manual de despliegue validado en entorno limpio",
+      "desc": "E12 · RNF-VTA-05 · Sin asignar; 0/7 casos.",
+      "assignee": "",
+      "tag": "Entrega",
+      "color": "#852C00"
+    },
+    {
+      "id": "2du3s86o",
+      "colId": "i5q8uvwe",
+      "title": "Pruebas transversales: cobertura, E2E, regresión",
+      "desc": "TRANSV · R-13 · 7 casos sin ejecutar.",
+      "assignee": "",
+      "tag": "Pruebas",
+      "color": "#FF884C"
+    }
+  ],
+  "globalPerRow": 3
+}
+    </script>
 
 <script>
 // ── State ────────────────────────────────────────────────
@@ -2076,5 +3787,6 @@ function toggleTheme() {
 applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 render();
 </script>
-</body>
-</html>
+
+
+</body></html>
