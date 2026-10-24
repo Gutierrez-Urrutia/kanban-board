@@ -621,6 +621,50 @@
   }
   .btn-addcol:hover { background: var(--theme-btn-hover); }
 
+  /* ── Login (acceso restringido con Google) ── */
+  .login-overlay {
+    position: fixed; inset: 0;
+    z-index: 1000;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .25s;
+  }
+  .login-overlay.hidden { display: none; }
+  .login-box {
+    text-align: center;
+    max-width: 360px;
+    padding: 32px;
+  }
+  .login-box h1 { color: var(--card-title); font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .login-box h1 span { color: var(--accent); }
+  .login-hint { color: var(--label-color); font-size: 13px; line-height: 1.5; margin-bottom: 22px; }
+  .btn-google {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    color: var(--card-title);
+    border: 1px solid var(--input-border);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .12s, box-shadow .12s;
+    box-shadow: var(--card-shadow);
+  }
+  .btn-google:hover { box-shadow: var(--card-hover-shadow); }
+  .login-error {
+    margin-top: 16px;
+    color: #AC3900;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
   /* ── Modal ── */
   .modal-overlay {
     display: none;
@@ -857,6 +901,19 @@
 </style>
 </head>
 <body>
+
+<!-- Pantalla de acceso (Google Sign-In vía Firebase Auth) -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <h1>Kanban Board <span>ND SALES</span></h1>
+    <p class="login-hint">Inicia sesión con tu cuenta de Google autorizada para acceder al tablero.</p>
+    <button class="btn-google" id="btn-google-login">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.48a5.54 5.54 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.26v3.09A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28V6.63H1.26A12 12 0 0 0 0 12c0 1.94.46 3.77 1.26 5.37l4.01-3.09z"/><path fill="#EA4335" d="M12 4.75c1.76 0 3.34.6 4.58 1.79l3.44-3.44C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.26 6.63l4.01 3.09C6.22 6.86 8.87 4.75 12 4.75z"/></svg>
+      Iniciar sesión con Google
+    </button>
+    <p class="login-error" id="login-error" style="display:none"></p>
+  </div>
+</div>
 
 <header>
   <h1>Kanban Board <span>Proyecto ND SALES V2</span></h1>
@@ -2029,6 +2086,7 @@
 <!-- Firebase (CDN, SDK "compat" para no requerir build/módulos) -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
 <!-- Datos embebidos: saveToFile() actualiza este bloque al guardar en disco -->
 <script id="initial-data" type="application/json">
@@ -2777,16 +2835,81 @@ const firebaseConfig = {
   appId:             "1:535541541485:web:0e3c9d571363fc8158ad64",
 };
 
+// Correos de Google autorizados a entrar al tablero (en minúsculas).
+// Esta lista es solo para la UX de login; el control real de acceso
+// está en las reglas de seguridad de Firestore, que deben tener la misma lista.
+const ALLOWED_EMAILS = [
+  'pa.gutierrezu@duocuc.cl',
+  'her.lopezs@duocuc.cl',
+  'bar.zunigaa@duocuc.cl',
+  'jor.saavedra@duocuc.cl',
+  'lu.bravoy@profesor.duoc.cl',
+];
+
 let boardRef      = null; // referencia al documento de Firestore con el tablero
 let applyingRemote = false; // evita reenviar a la nube un cambio que acaba de llegar de ella
+
+function ensureFirebaseApp() {
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+}
+
+// ── Acceso con Google (Firebase Auth) ─────────────────────
+function initAuth() {
+  const overlay = document.getElementById('login-overlay');
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'TU_API_KEY') {
+    // Sin Firebase configurado: no hay nube que proteger, no se bloquea la app.
+    overlay.classList.add('hidden');
+    return;
+  }
+
+  ensureFirebaseApp();
+  const auth = firebase.auth();
+
+  document.getElementById('btn-google-login').addEventListener('click', () => {
+    hideLoginError();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).catch(err => {
+      if (err.code !== 'auth/popup-closed-by-user') {
+        showLoginError('No se pudo iniciar sesión: ' + err.message);
+      }
+    });
+  });
+
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      overlay.classList.remove('hidden');
+      return;
+    }
+    const email = (user.email || '').toLowerCase();
+    if (!ALLOWED_EMAILS.includes(email)) {
+      showLoginError(`La cuenta ${user.email} no tiene acceso a este tablero.`);
+      auth.signOut();
+      return;
+    }
+    hideLoginError();
+    overlay.classList.add('hidden');
+    startCloudSync();
+  });
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function hideLoginError() {
+  document.getElementById('login-error').style.display = 'none';
+}
 
 function startCloudSync() {
   if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'TU_API_KEY') {
     console.info('Firebase no configurado: el tablero solo se guarda en este navegador.');
     return;
   }
+  if (boardRef) return; // ya iniciado (evita doble listener si onAuthStateChanged dispara más de una vez)
   try {
-    firebase.initializeApp(firebaseConfig);
+    ensureFirebaseApp();
     const db = firebase.firestore();
     boardRef = db.collection('kanban-board').doc('main');
 
@@ -3914,7 +4037,7 @@ function toggleTheme() {
 // ── Init ──────────────────────────────────────────────────
 applyTheme(localStorage.getItem(THEME_KEY) || 'light');
 render();
-startCloudSync();
+initAuth(); // inicia sesión con Google; si pasa, llama a startCloudSync()
 </script>
 
 
