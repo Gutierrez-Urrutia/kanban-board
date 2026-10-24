@@ -324,6 +324,14 @@
   .dd-item.danger { color: #AC3900; }
   .dd-item.danger svg { opacity: .9; }
   .dd-item.danger:hover { background: rgba(172,57,0,.1); }
+  .dd-account-email {
+    padding: 0 12px 8px;
+    font-size: 12px;
+    color: var(--dd-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .dd-item .dd-badge {
     margin-left: auto;
     font-size: 10px;
@@ -966,6 +974,14 @@
         <button class="dd-item" onclick="saveToFile();closeMenu()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
           Guardar en archivo
+        </button>
+
+        <div class="dd-sep" id="dd-account-sep" style="display:none"></div>
+        <div class="dd-section-label" id="dd-account-label" style="display:none">Cuenta</div>
+        <div class="dd-account-email" id="dd-account-email"></div>
+        <button class="dd-item" id="dd-account-logout" onclick="logout();closeMenu()" style="display:none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          Cerrar sesión
         </button>
 
         <div class="dd-sep"></div>
@@ -2826,13 +2842,18 @@ const STORAGE_KEY = 'kanban_nd_sales_v2';
 // 3. Habilita Firestore Database (Firebase Console → Build → Firestore Database).
 // Si dejas los valores de ejemplo, la app sigue funcionando solo con localStorage
 // (persistencia local, como antes), sin sincronizar entre equipos.
+// Estos placeholders los reemplaza el workflow de GitHub Actions
+// (.github/workflows/deploy.yml) con los valores de los Secrets del repo
+// al momento de publicar en GitHub Pages. En el repo nunca quedan los
+// valores reales. Para pruebas 100% locales (abriendo este archivo
+// directo), reemplázalos manualmente a mano aquí y no los commitees.
 const firebaseConfig = {
-  apiKey:            "AIzaSyDbLxrZ2Td7Fy6lhlcnUB2GyE5xz_tVIq8",
-  authDomain:        "kanban-nd.firebaseapp.com",
-  projectId:         "kanban-nd",
-  storageBucket:      "kanban-nd.firebasestorage.app",
-  messagingSenderId: "535541541485",
-  appId:             "1:535541541485:web:0e3c9d571363fc8158ad64",
+  apiKey:            "__FIREBASE_API_KEY__",
+  authDomain:        "__FIREBASE_AUTH_DOMAIN__",
+  projectId:         "__FIREBASE_PROJECT_ID__",
+  storageBucket:      "__FIREBASE_STORAGE_BUCKET__",
+  messagingSenderId: "__FIREBASE_MESSAGING_SENDER_ID__",
+  appId:             "__FIREBASE_APP_ID__",
 };
 
 // Correos de Google autorizados a entrar al tablero (en minúsculas).
@@ -2856,7 +2877,7 @@ function ensureFirebaseApp() {
 // ── Acceso con Google (Firebase Auth) ─────────────────────
 function initAuth() {
   const overlay = document.getElementById('login-overlay');
-  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'TU_API_KEY') {
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('__FIREBASE_')) {
     // Sin Firebase configurado: no hay nube que proteger, no se bloquea la app.
     overlay.classList.add('hidden');
     return;
@@ -2878,6 +2899,7 @@ function initAuth() {
   auth.onAuthStateChanged(user => {
     if (!user) {
       overlay.classList.remove('hidden');
+      setAccountMenuVisible(false);
       return;
     }
     const email = (user.email || '').toLowerCase();
@@ -2888,8 +2910,23 @@ function initAuth() {
     }
     hideLoginError();
     overlay.classList.add('hidden');
+    document.getElementById('dd-account-email').textContent = user.email;
+    setAccountMenuVisible(true);
     startCloudSync();
   });
+}
+
+function setAccountMenuVisible(visible) {
+  const display = visible ? '' : 'none';
+  document.getElementById('dd-account-sep').style.display    = display;
+  document.getElementById('dd-account-label').style.display  = display;
+  document.getElementById('dd-account-email').style.display  = display;
+  document.getElementById('dd-account-logout').style.display = visible ? 'flex' : 'none';
+  if (!visible) document.getElementById('dd-account-email').textContent = '';
+}
+
+function logout() {
+  firebase.auth().signOut();
 }
 
 function showLoginError(msg) {
@@ -2903,7 +2940,7 @@ function hideLoginError() {
 }
 
 function startCloudSync() {
-  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'TU_API_KEY') {
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('__FIREBASE_')) {
     console.info('Firebase no configurado: el tablero solo se guarda en este navegador.');
     return;
   }
